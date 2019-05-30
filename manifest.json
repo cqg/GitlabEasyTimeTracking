@@ -6,7 +6,8 @@
   "description": "Easy time tracking for GitLab.",
 
   "permissions": [
-    "storage"
+    "storage",
+    "tabs"
   ],
 
   "icons": {

@@ -41,13 +41,35 @@ function updateInterface(data) {
   }
 }
 
+function getPathFromUrl(url) {
+   let pattern = RegExp("://[\.a-zA-Z]*(/.*)\?");
+   let matches = url.match(pattern);
+   return matches[1];
+}
+
+function getProjectFromPath(path) {
+   let elems = path.split("/");
+   if (elems.length > 2) {
+      return elems[1] + '/' + elems[2];
+   }
+   return "";
+}
+
+function getMergeRequestIdFromPath(path) {
+   let elems = path.split("/");
+   if (elems.length > 4 && elems[3] == "merge_requests") {
+      return elems[4];
+   }
+   return "";
+}
+
 function initializeDataFromPage(data) {
-  if (!data.startTime) {
-    // TODO: initialize
-    data.project = "";
-    data.mergeRequestId = "";
-  }
-  return data;
+  chrome.tabs.query({active:true,currentWindow:true},function(tabs){
+    let path = getPathFromUrl(tabs[0].url);
+    data.project = getProjectFromPath(path);
+    data.mergeRequestId = getMergeRequestIdFromPath(path);
+    updateData(data);
+  });
 }
 
 function retrieveDataFromInterface(data) {
@@ -84,7 +106,12 @@ function init(data) {
   let timer = document.getElementById("timer");
   timer.addEventListener("click", e => browser.storage.local.get(null).then(data => onTimerClick(e.target, data), onError), false);
 
-  updateData(initializeDataFromPage(data))
+  if (!data.startTime) {
+    initializeDataFromPage(data)
+  }
+  else {
+    updateInterface(data);
+  }
 }
 
 browser.storage.local.get(null).then(data => init(data), onError);
