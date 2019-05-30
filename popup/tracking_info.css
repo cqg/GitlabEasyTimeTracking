@@ -7,7 +7,7 @@ html {
   margin: 0.1rem;
   display: inline-block;
   position: relative;
-  width: 9rem;
+  width: 11.2rem;
   height: 1.8rem;
   box-sizing: border-box;
 }
@@ -17,6 +17,13 @@ html {
   left: 1.7rem;
   height: 90%;
   width: 7rem;
+}
+
+.min-text-edit {
+  position: absolute;
+  left: 8.8rem;
+  height: 90%;
+  width: 2rem;
 }
 
 .timer-button {
