@@ -7,9 +7,21 @@ function fillGitlabInfo(info) {
   token = info.token;
 }
 
+function reqListener() {
+  console.log(this.responseText);
+}
+
 function logWorkTime(projectId, mergeRequestId, spentTime) {
-  // TODO: do URL encoding of projectId and send it via API
-  console.log("spent " + spentTime + " on " + projectId + ": " + mergeRequestId + " - " + hostname + ":" + token);
+  let request = new XMLHttpRequest();
+  let params = "duration=" + spentTime + "s";
+  let path = "/api/v4/projects/" + encodeURIComponent(projectId) + "/merge_requests/" + mergeRequestId + "/add_spent_time";
+  console.log(hostname + path);
+  console.log(params);
+
+  request.addEventListener("load", reqListener);
+  request.open("POST", hostname + path + '?' + params, true);
+  request.setRequestHeader("PRIVATE-TOKEN", token);
+  request.send();
 }
 
 function startTimer() {
