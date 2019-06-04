@@ -1,7 +1,15 @@
 
+hostname = ""
+token = ""
+
+function fillGitlabInfo(info) {
+  hostname = info.hostname;
+  token = info.token;
+}
+
 function logWorkTime(projectId, mergeRequestId, spentTime) {
   // TODO: do URL encoding of projectId and send it via API
-  console.log("spent " + spentTime + " on " + projectId + ": " + mergeRequestId);
+  console.log("spent " + spentTime + " on " + projectId + ": " + mergeRequestId + " - " + hostname + ":" + token);
 }
 
 function startTimer() {
@@ -115,4 +123,5 @@ function init(data) {
 }
 
 browser.storage.local.get(null).then(data => init(data), onError);
+browser.storage.sync.get(["token", "hostname"]).then(fillGitlabInfo, onError);
 

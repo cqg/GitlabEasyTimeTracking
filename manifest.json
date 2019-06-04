@@ -15,6 +15,17 @@
     "96": "icons/play.svg"
   },
 
+  "options_ui": {
+    "page": "options/options.html",
+    "browser_style": true
+  },
+
+  "applications": {
+    "gecko": {
+      "id": "{403d73be-461f-4ae9-9fa3-54f1b02498a2}"
+    }
+  },
+
   "browser_action": {
     "default_icon": "icons/play.svg",
     "default_title": "Start tracking",
