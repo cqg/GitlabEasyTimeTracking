@@ -39,15 +39,12 @@ html {
   box-sizing: border-box;
 }
 
-.timer-button.start {
-  background: url('../icons/play.svg') no-repeat center;
+.timer-button {
   background-size: 100% 100%;
   background-size: cover;
+  background: url('../icons/start.png') no-repeat center;
 }
 
-.timer-button.stop {
-  background: url('../icons/stop.svg') no-repeat center;
-  background-size: 100% 100%;
-  background-size: cover;
+.timer-button.started {
+  background: url('../icons/stop.png') no-repeat center;
 }
-

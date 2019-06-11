@@ -24,31 +24,27 @@ function logWorkTime(projectId, mergeRequestId, spentTime) {
   request.send();
 }
 
-function startTimer() {
-  return new Date();
-}
-
 function stopTimer(start) {
-  let end= new Date();
-  let diff = end - start;
+  let end = new Date();
+  let diff = end - new Date(start);
   let seconds = Math.round(diff / 1000);
   return seconds;
 }
 
 function updateIcons(started, timer) {
   if (started) {
-    timer.className = "timer-button stop";
-    browser.browserAction.setIcon({path: "../icons/stop.svg"});
+    timer.classList.add("started");
+    browser.browserAction.setIcon({path: "../icons/stop.png"});
   }
   else {
-    timer.className = "timer-button start";
-    browser.browserAction.setIcon({path: "../icons/play.svg"});
+    timer.classList.remove("started");
+    browser.browserAction.setIcon({path: "../icons/start.png"});
   }
 }
 
 function updateInterface(data) {
   let timer = document.getElementById("timer");
-  updateIcons(data.startTime, timer);
+  updateIcons(isTimerActive(data), timer);
   
   let projectEdit = document.getElementById("project-id");
   if (data.project != undefined) {
@@ -83,6 +79,10 @@ function getMergeRequestIdFromPath(path) {
    return "";
 }
 
+function isTimerActive(data) {
+    return data.startTime > 0;
+}
+
 function initializeDataFromPage(data) {
   chrome.tabs.query({active:true,currentWindow:true},function(tabs){
     let path = getPathFromUrl(tabs[0].url);
@@ -110,15 +110,16 @@ function updateData(data) {
 }
 
 function onTimerClick(target, data) {
-  if (data.startTime) {
+  var onStopping = isTimerActive(data);
+
+  if (onStopping) {
     let spent = stopTimer(data.startTime);
-    data.startTime = false;
     logWorkTime(data.project, data.mergeRequestId, spent);
   }
   else {
     data = retrieveDataFromInterface(data);
-    data.startTime = startTimer();
   }
+  data.startTime = onStopping ? 0 : (new Date()).getTime();
   updateData(data);
 }
 
@@ -126,7 +127,7 @@ function init(data) {
   let timer = document.getElementById("timer");
   timer.addEventListener("click", e => browser.storage.local.get(null).then(data => onTimerClick(e.target, data), onError), false);
 
-  if (!data.startTime) {
+  if (!isTimerActive(data)) {
     initializeDataFromPage(data)
   }
   else {

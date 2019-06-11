@@ -11,8 +11,7 @@
   ],
 
   "icons": {
-    "48": "icons/play.svg",
-    "96": "icons/play.svg"
+    "16": "icons/start.png"
   },
 
   "options_ui": {
@@ -27,7 +26,7 @@
   },
 
   "browser_action": {
-    "default_icon": "icons/play.svg",
+    "default_icon": "icons/start.png",
     "default_title": "Start tracking",
     "default_popup": "popup/tracking_info.html",
     "browser_style": true
