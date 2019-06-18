@@ -1,3 +1,5 @@
+import "../css/options.css";
+
 function saveOptions(e) {
   e.preventDefault();
   browser.storage.sync.set({
@@ -7,7 +9,6 @@ function saveOptions(e) {
 }
 
 function restoreOptions() {
-
   function setCurrentChoice(result) {
     document.querySelector("#token").value = result.token || "";
     document.querySelector("#hostname").value = result.hostname || "";
@@ -22,4 +23,3 @@ function restoreOptions() {
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
 document.querySelector("form").addEventListener("submit", saveOptions);
-
