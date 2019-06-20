@@ -2,16 +2,8 @@ import { START_TIMER, STOP_TIMER, ON_TIMER_DATA_LOAD } from '../constants/Action
 
 const idleState = { startTime: 0 };
 
-function onStart(data) {
-  return data;
-}
-
-function onStop() {
-  return idleState;
-}
-
 function onDataLoad(data) {
-  if (data != null && data.startTime != undefined && data.startTime > 0) {
+  if (data && data.startTime && data.startTime > 0) {
     return data;
   }
   return idleState;
@@ -20,9 +12,9 @@ function onDataLoad(data) {
 export function timer(state = null, action) {
   switch (action.type) {
     case START_TIMER:
-      return onStart(action.data);
+      return action.data;
     case STOP_TIMER:
-      return onStop();
+      return idleState;
     case ON_TIMER_DATA_LOAD:
       return onDataLoad(action.data);
     default:
