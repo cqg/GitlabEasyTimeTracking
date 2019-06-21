@@ -2,7 +2,7 @@ import "../css/popup.css";
 import { createStore } from 'redux';
 import { storeTimerData, retrievePageUrl } from './popup/api/browser';
 import { initializeData } from './popup/actions/settings';
-import { onTimerClick, isTimerActive, isTimerValid } from './popup/actions/timer';
+import { onTimerClick, isTimerActive, isTimerLoaded } from './popup/actions/timer';
 import reducer from './popup/reducers';
 
 const store = createStore(reducer);
@@ -54,7 +54,7 @@ function updateEdits(projectId, mergeRequestId) {
 }
 
 function updateInterface(data) {
-  if (!isTimerValid(data)) return;
+  if (!isTimerLoaded(data)) return;
 
   updateIcons(isTimerActive(data), data.timer);
   updateEdits(data.timer.projectId, data.timer.mergeRequestId);
@@ -62,7 +62,7 @@ function updateInterface(data) {
 
 function initializeFromUrl(url) {
   let data = store.getState();
-  if (!isTimerValid(data) || !isTimerActive(data))
+  if (!isTimerLoaded(data) || !isTimerActive(data))
   {
     let path = getPathFromUrl(url);
     updateEdits(getProjectFromPath(path), getMergeRequestIdFromPath(path));
@@ -83,7 +83,7 @@ store.subscribe(() => {
   let state = store.getState();
   console.log('state', state);
 
-  if (state.timer != null) storeTimerData(state.timer);
+  if (isTimerLoaded(state.timer)) storeTimerData(state.timer);
   updateInterface(state);
 });
 

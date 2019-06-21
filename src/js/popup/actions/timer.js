@@ -30,7 +30,7 @@ function stopTimer(timer, settings) {
   return { type: types.STOP_TIMER };
 }
 
-export function isTimerValid(data) {
+export function isTimerLoaded(data) {
   return data.timer != null;
 }
 
@@ -40,7 +40,7 @@ export function isTimerActive(data) {
 
 export function onTimerClick(store, selectedProjectId, selectedMergeRequestId) {
   let data = store.getState();
-  if (!isTimerValid(data)) return;
+  if (!isTimerLoaded(data)) return;
 
   if (!isTimerActive(data)) {
     store.dispatch(startTimer(selectedProjectId, selectedMergeRequestId));
