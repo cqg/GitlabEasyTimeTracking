@@ -14,7 +14,7 @@ const mergeRequestEdit = document.getElementById("merge-request-id");
 // TODO: Move UI logic to separate file
 // {
 function getPathFromUrl(url) {
-  let pattern = RegExp("://[\.a-zA-Z]*(/.*)\?");
+  let pattern = RegExp("://[\.a-zA-Z]*(/[^?]+)\?");
   let matches = url.match(pattern);
   return matches[1];
 }
@@ -83,7 +83,7 @@ store.subscribe(() => {
   let state = store.getState();
   console.log('state', state);
 
-  if (isTimerLoaded(state.timer)) storeTimerData(state.timer);
+  if (isTimerLoaded(state)) storeTimerData(state.timer);
   updateInterface(state);
 });
 
