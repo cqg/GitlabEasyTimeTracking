@@ -1,0 +1,29 @@
+{
+  "name": "Gitlab Easy Time Tracking",
+  "description": "A browser plugin for tracking time for Gitlab merge-requests",
+  "version": "0.1",
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": "start-16.png",
+    "default_title": "Start tracking",
+    "browser_style": true
+  },
+  "icons": {
+    "16": "start-16.png"
+  },
+  "manifest_version": 2,
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "applications": {
+    "gecko": {
+      "id": "{403d73be-461f-4ae9-9fa3-54f1b02498a2}"
+    }
+  }
+}
