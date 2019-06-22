@@ -5,6 +5,9 @@ import { initializeData } from './popup/actions/settings';
 import { onTimerClick, isTimerActive, isTimerLoaded } from './popup/actions/timer';
 import reducer from './popup/reducers';
 
+import imgStart from '../img/start-gray-16.png';
+import imgStop from '../img/stop-gray-16.png';
+
 const store = createStore(reducer);
 
 const timerBtn = document.getElementById("timer");
@@ -38,11 +41,11 @@ function getMergeRequestIdFromPath(path) {
 function updateIcons(started) {
   if (started) {
     timerBtn.classList.add("started");
-    browser.browserAction.setIcon({path: "stop-16.png"});
+    browser.browserAction.setIcon({path: imgStop});
   }
   else {
     timerBtn.classList.remove("started");
-    browser.browserAction.setIcon({path: "start-16.png"});
+    browser.browserAction.setIcon({path: imgStart});
   }
 }
 

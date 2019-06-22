@@ -8,12 +8,15 @@
   },
   "browser_action": {
     "default_popup": "popup.html",
-    "default_icon": "start-16.png",
+    "default_icon": "start-gray-16.png",
     "default_title": "Start tracking",
     "browser_style": true
   },
   "icons": {
-    "16": "start-16.png"
+    "16": "start-black-16.png",
+    "48": "start-black-48.png",
+    "96": "start-black-96.png",
+    "128": "start-black-128.png"
   },
   "manifest_version": 2,
   "permissions": [

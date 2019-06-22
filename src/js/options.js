@@ -1,5 +1,10 @@
 import "../css/options.css";
 
+import '../img/start-black-16.png';
+import '../img/start-black-48.png';
+import '../img/start-black-96.png';
+import '../img/start-black-128.png';
+
 function saveOptions(e) {
   e.preventDefault();
   browser.storage.sync.set({

@@ -40,12 +40,14 @@ html {
 }
 
 .timer-button {
+  background: url('../img/start-black.svg') no-repeat center;
   background-size: 100% 100%;
   background-size: cover;
-  background: url('../img/start-16.png') no-repeat center;
 }
 
 .timer-button.started {
-  background: url('../img/stop-16.png') no-repeat center;
+  background: url('../img/stop-black.svg') no-repeat center;
+  background-size: 100% 100%;
+  background-size: cover;
 }
   
