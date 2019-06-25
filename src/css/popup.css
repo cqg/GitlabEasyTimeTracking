@@ -42,12 +42,9 @@ html {
 .timer-button {
   background: url('../img/start-black.svg') no-repeat center;
   background-size: 100% 100%;
-  background-size: cover;
 }
 
 .timer-button.started {
-  background: url('../img/stop-black.svg') no-repeat center;
-  background-size: 100% 100%;
-  background-size: cover;
+  background-image: url('../img/stop-black.svg');
 }
   
