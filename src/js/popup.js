@@ -16,12 +16,6 @@ const mergeRequestEdit = document.getElementById("merge-request-id");
 
 // TODO: Move UI logic to separate file
 // {
-function getPathFromUrl(url) {
-  let pattern = RegExp("://[\.a-zA-Z]*(/[^?]+)\?");
-  let matches = url.match(pattern);
-  return matches[1];
-}
-
 function getProjectFromPath(path) {
   let elems = path.split("/");
   if (elems.length > 2) {
@@ -67,7 +61,7 @@ function initializeFromUrl(url) {
   let data = store.getState();
   if (!isTimerLoaded(data) || !isTimerActive(data))
   {
-    let path = getPathFromUrl(url);
+    let path = (new URL(url)).pathname;
     updateEdits(getProjectFromPath(path), getMergeRequestIdFromPath(path));
   }
 }
