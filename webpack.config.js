@@ -33,7 +33,7 @@ var options = {
   module: {
     rules: [
       {
-        test: /popup\.css$/,
+        test: /\.css$/,
         loader: "style-loader!css-loader",
         exclude: /node_modules/
       },

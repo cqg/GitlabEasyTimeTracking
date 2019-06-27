@@ -1,21 +1,15 @@
 import "../css/popup.css";
+import '../css/bootstrap.min.css';
+
 import { createStore } from 'redux';
 import { storeTimerData, retrievePageUrl } from './popup/api/browser';
 import { initializeData } from './popup/actions/settings';
 import { onTimerClick, isTimerActive, isTimerLoaded } from './popup/actions/timer';
+import { updateView, updateInputsView, getProjectId, getMergeRequestId, timerBtn } from './popup/view/view';
 import reducer from './popup/reducers';
-
-import imgStart from '../img/start-gray-16.png';
-import imgStop from '../img/stop-gray-16.png';
 
 const store = createStore(reducer);
 
-const timerBtn = document.getElementById("timer");
-const projectEdit = document.getElementById("project-id");
-const mergeRequestEdit = document.getElementById("merge-request-id");
-
-// TODO: Move UI logic to separate file
-// {
 function getProjectFromPath(path) {
   let elems = path.split("/");
   if (elems.length > 2) {
@@ -32,37 +26,12 @@ function getMergeRequestIdFromPath(path) {
   return "";
 }
 
-function updateIcons(started) {
-  if (started) {
-    timerBtn.classList.add("started");
-    browser.browserAction.setIcon({path: imgStop});
-  }
-  else {
-    timerBtn.classList.remove("started");
-    browser.browserAction.setIcon({path: imgStart});
-  }
-}
-
-function updateEdits(projectId, mergeRequestId) {
-  if (projectId != undefined && mergeRequestId != undefined) {
-    projectEdit.value = projectId;
-    mergeRequestEdit.value = mergeRequestId;
-  }
-}
-
-function updateInterface(data) {
-  if (!isTimerLoaded(data)) return;
-
-  updateIcons(isTimerActive(data), data.timer);
-  updateEdits(data.timer.projectId, data.timer.mergeRequestId);
-}
-
 function initializeFromUrl(url) {
   let data = store.getState();
   if (!isTimerLoaded(data) || !isTimerActive(data))
   {
     let path = (new URL(url)).pathname;
-    updateEdits(getProjectFromPath(path), getMergeRequestIdFromPath(path));
+    updateInputsView(getProjectFromPath(path), getMergeRequestIdFromPath(path));
   }
 }
 
@@ -72,16 +41,18 @@ function onError(err) {
 
 function initializeInterface() {
   retrievePageUrl(initializeFromUrl, onError);
-  timerBtn.addEventListener("click", e => onTimerClick(store, projectEdit.value, mergeRequestEdit.value), false);
+  timerBtn.addEventListener("click", () => onTimerClick(store, getProjectId(), getMergeRequestId()), false);
 }
-// }
 
 store.subscribe(() => {
   let state = store.getState();
   console.log('state', state);
 
-  if (isTimerLoaded(state)) storeTimerData(state.timer);
-  updateInterface(state);
+  if (!isTimerLoaded(state)){
+      return;
+  }
+  storeTimerData(state.timer);
+  updateView(state);
 });
 
 initializeInterface();

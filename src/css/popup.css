@@ -37,9 +37,6 @@ html {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-}
-
-.timer-button {
   background: url('../img/start-black.svg') no-repeat center;
   background-size: 100% 100%;
 }
@@ -47,4 +44,3 @@ html {
 .timer-button.started {
   background-image: url('../img/stop-black.svg');
 }
-  
