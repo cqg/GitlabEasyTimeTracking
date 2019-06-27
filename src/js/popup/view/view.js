@@ -6,7 +6,7 @@ import imgStop from '../../../img/stop-gray-16.png';
 const timerBtn = document.getElementById("timer");
 
 function updateView(data) {
-  updateButtonView(isTimerActive(data), data.timer);
+  updateButtonView(isTimerActive(data));
   updateInputsView(data.timer.projectId, data.timer.mergeRequestId);
 }
 
