@@ -1,5 +1,6 @@
 import { logWorkTime } from '../api/gitlab';
 import * as types from '../constants/ActionTypes';
+import { startTimerCounter, stopTimerCounter } from '../view/timerCounterView';
 
 function startTimer(projectId, mergeRequestId) {
   let startTime = (new Date()).getTime();
@@ -44,8 +45,10 @@ export function onTimerClick(store, selectedProjectId, selectedMergeRequestId) {
 
   if (!isTimerActive(data)) {
     store.dispatch(startTimer(selectedProjectId, selectedMergeRequestId));
+    startTimerCounter();
   } else {
     store.dispatch(stopTimer(data.timer, data.settings));
+    stopTimerCounter();
   }
 }
 
