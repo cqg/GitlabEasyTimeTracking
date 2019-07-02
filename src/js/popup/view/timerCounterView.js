@@ -1,18 +1,28 @@
 import Timer from 'easytimer.js';
+import { calculateSpentSeconds } from '../actions/timer';
 
 const timer = new Timer();
-function updateTimerCounter(element, timer) {
-  element.innerText = timer.getTimeValues().toString();
+const timerCounterElement = document.getElementById("timer-counter");
+
+function updateTimerCounter(store) {
+  const data = store.getState();
+  const secodsPassed = calculateSpentSeconds(data.timer.startTime);
+  timerCounterElement.innerText = secondsToFormattedTime(secodsPassed);
 }
 
-export function startTimerCounter(initialSeconds) {
-  var options = initialSeconds
-    ? { precision: 'seconds', startValues: { seconds: initialSeconds } }
-    : null;
-  timer.start(options);
+function secondsToFormattedTime(seconds) {
+  let date = new Date(null);
+  date.setSeconds(seconds);
+  return date.toISOString().substr(11, 8);
+}
 
-  var element = document.getElementById("timer-counter");
-  timer.addEventListener('secondsUpdated', () => updateTimerCounter(element, timer));
+export function startTimerCounter(store) {
+  //TODO: get already spent time from store.
+  // const options = initialSeconds
+  //   ? { precision: 'seconds', startValues: { seconds: initialSeconds } }
+  //   : null;
+  timer.start();
+  timer.addEventListener('secondsUpdated', () => updateTimerCounter(store));
 }
 
 export function stopTimerCounter() {

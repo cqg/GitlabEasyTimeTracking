@@ -15,13 +15,6 @@ function startTimer(projectId, mergeRequestId) {
   };
 }
 
-function calculateSpentSeconds(start) {
-  let end = new Date();
-  let diff = end - new Date(start);
-  let seconds = Math.round(diff / 1000);
-  return seconds;
-}
-
 function stopTimer(timer, settings) {
   let projectId = timer.projectId;
   let mergeRequestId = timer.mergeRequestId;
@@ -40,15 +33,22 @@ export function isTimerActive(data) {
 }
 
 export function onTimerClick(store, selectedProjectId, selectedMergeRequestId) {
-  let data = store.getState();
+  const data = store.getState();
   if (!isTimerLoaded(data)) return;
 
   if (!isTimerActive(data)) {
     store.dispatch(startTimer(selectedProjectId, selectedMergeRequestId));
-    startTimerCounter();
+    startTimerCounter(store);
   } else {
     store.dispatch(stopTimer(data.timer, data.settings));
     stopTimerCounter();
   }
+}
+
+export function calculateSpentSeconds(start) {
+  let end = new Date();
+  let diff = end - new Date(start);
+  let seconds = Math.round(diff / 1000);
+  return seconds;
 }
 
