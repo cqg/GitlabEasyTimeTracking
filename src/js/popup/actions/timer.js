@@ -20,7 +20,13 @@ function stopTimer(timer, settings) {
   let mergeRequestId = timer.mergeRequestId;
   let spentTime = calculateSpentSeconds(timer.startTime);
 
-  logWorkTime(settings.hostname, settings.token, projectId, mergeRequestId, spentTime);
+  logWorkTime(settings.hostname, settings.token, projectId, mergeRequestId, spentTime)
+    .then((response) => console.log('response', response))
+    .catch((error) => {
+      console.log(error);
+      alert(`Error: ${error.status}, ${error.statusText}\nPlease enter spent time manually via command: /spend ${spentTime}s`)
+    });
+
   return { type: types.STOP_TIMER };
 }
 

@@ -40,7 +40,7 @@ function onError(err) {
 }
 
 function initializeInterface() {
-  retrievePageUrl(initializeFromUrl, onError);
+  retrievePageUrl().then(initializeFromUrl, onError);
   timerBtn.addEventListener("click", () => onTimerClick(store, getProjectId(), getMergeRequestId()), false);
 }
 

@@ -6,7 +6,7 @@ function onError(err) {
 }
 
 export function initializeData(store) {
-  retrieveTimerData((data) => store.dispatch({ type: ON_TIMER_DATA_LOAD, data }), onError);
-  retrieveSettings((data) => store.dispatch({ type: ON_SETTINGS_LOAD, data }), onError);
+  retrieveTimerData().then((data) => store.dispatch({ type: ON_TIMER_DATA_LOAD, data }), onError);
+  retrieveSettings().then((data) => store.dispatch({ type: ON_SETTINGS_LOAD, data }), onError);
 }
 
