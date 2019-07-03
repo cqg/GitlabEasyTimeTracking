@@ -1,7 +1,7 @@
 import { isTimerActive } from '../actions/timer';
 
 import imgStart from '../../../img/start-gray-16.png';
-import imgStop from '../../../img/stop-gray-16.png';
+import imgStop from '../../../img/stop-red-16.png';
 
 const timerBtn = document.getElementById("timer");
 
