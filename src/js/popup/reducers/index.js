@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 import { timer } from './timer';
 import { settings } from './settings';
+import { spentTime } from './spentTime';
 
 export default combineReducers({
   timer,
-  settings
-})
+  settings,
+  spentTime
+});
 

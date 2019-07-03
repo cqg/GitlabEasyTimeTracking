@@ -24,6 +24,7 @@
   "dependencies": {
     "easytimer.js": "^3.2.0",
     "imports-loader": "^0.8.0",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   }
 }

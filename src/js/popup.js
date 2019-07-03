@@ -1,14 +1,17 @@
 import "../css/popup.css";
 import '../css/bootstrap.min.css';
 
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
 import { storeTimerData, retrievePageUrl } from './popup/api/browser';
-import { initializeData } from './popup/actions/settings';
+import { initializeTimerData, initializeSettingsData } from './popup/actions/settings';
 import { onTimerClick, isTimerActive, isTimerLoaded } from './popup/actions/timer';
-import { updateView, updateInputsView, getProjectId, getMergeRequestId, timerBtn } from './popup/view/view';
+import { onNewMergeRequest, initializeUserId } from './popup/actions/spentTime';
+import { updateView, updateInputsView, getProjectId, getMergeRequestId, timerBtn, addMergeRequestChangeListener } from './popup/view/view';
+import { startTimerCounter } from './popup/view/timerCounterView';
 import reducer from './popup/reducers';
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(reduxThunk));
 
 function getProjectFromPath(path) {
   let elems = path.split("/");
@@ -42,6 +45,7 @@ function onError(err) {
 function initializeInterface() {
   retrievePageUrl().then(initializeFromUrl, onError);
   timerBtn.addEventListener("click", () => onTimerClick(store, getProjectId(), getMergeRequestId()), false);
+  addMergeRequestChangeListener(() => store.dispatch(onNewMergeRequest(getProjectId(), getMergeRequestId())));
 }
 
 store.subscribe(() => {
@@ -56,5 +60,19 @@ store.subscribe(() => {
 });
 
 initializeInterface();
-initializeData(store);
+
+store.dispatch(initializeTimerData())
+  .then(() => {
+    if (isTimerActive(store.getState())) {
+      startTimerCounter(store);
+      return store.dispatch(onNewMergeRequest(getProjectId(), getMergeRequestId()))
+    }
+  });
+
+store.dispatch(initializeSettingsData())
+  .then(() => Promise.all([
+    store.dispatch(initializeUserId()),
+    store.dispatch(onNewMergeRequest(getProjectId(), getMergeRequestId()))
+  ]))
+
 

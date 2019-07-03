@@ -4,10 +4,9 @@ import { calculateSpentSeconds } from '../actions/timer';
 const timer = new Timer();
 const timerCounterElement = document.getElementById("timer-counter");
 
-function updateTimerCounter(store) {
-  const data = store.getState();
-  const secodsPassed = calculateSpentSeconds(data.timer.startTime);
-  timerCounterElement.innerText = secondsToFormattedTime(secodsPassed);
+export function updateTimerCounter(state) {
+  const secondsPassed = calculateSpentSeconds(state.timer.startTime) + state.spentTime.time;
+  timerCounterElement.innerText = secondsToFormattedTime(secondsPassed);
 }
 
 function secondsToFormattedTime(seconds) {
@@ -17,12 +16,8 @@ function secondsToFormattedTime(seconds) {
 }
 
 export function startTimerCounter(store) {
-  //TODO: get already spent time from store.
-  // const options = initialSeconds
-  //   ? { precision: 'seconds', startValues: { seconds: initialSeconds } }
-  //   : null;
   timer.start();
-  timer.addEventListener('secondsUpdated', () => updateTimerCounter(store));
+  timer.addEventListener('secondsUpdated', () => updateTimerCounter(store.getState()));
 }
 
 export function stopTimerCounter() {

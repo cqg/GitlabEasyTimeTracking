@@ -27,7 +27,7 @@ function stopTimer(timer, settings) {
       alert(`Error: ${error.status}, ${error.statusText}\nPlease enter spent time manually via command: /spend ${spentTime}s`)
     });
 
-  return { type: types.STOP_TIMER };
+  return { type: types.STOP_TIMER, data: { spentTime } };
 }
 
 export function isTimerLoaded(data) {
@@ -52,6 +52,7 @@ export function onTimerClick(store, selectedProjectId, selectedMergeRequestId) {
 }
 
 export function calculateSpentSeconds(start) {
+  if (start <= 0) return 0;
   let end = new Date();
   let diff = end - new Date(start);
   let seconds = Math.round(diff / 1000);
