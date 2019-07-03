@@ -1,4 +1,5 @@
 import { isTimerActive } from '../actions/timer';
+import { updateTimerCounter } from './timerCounterView';
 
 import imgStart from '../../../img/start-gray-16.png';
 import imgStop from '../../../img/stop-red-16.png';
@@ -8,6 +9,7 @@ const timerBtn = document.getElementById("timer");
 function updateView(data) {
   updateButtonView(isTimerActive(data));
   updateInputsView(data.timer.projectId, data.timer.mergeRequestId);
+  updateTimerCounter(data);
 }
 
 function updateInputsView(projectId, mergeRequestId) {
@@ -31,21 +33,29 @@ function updateButtonView(started) {
   }
 }
 
+const projectEdit = document.getElementById("project-id");
+
 function getProjectId() {
-  return document.getElementById("project-id").value;
+  return projectEdit.value;
 }
 
 function setProjectId(value) {
-  document.getElementById("project-id").value = value;
+  projectEdit.value = value;
 }
 
+const mergeRequestEdit = document.getElementById("merge-request-id");
+
 function getMergeRequestId() {
-  return document.getElementById("merge-request-id").value;
+  return mergeRequestEdit.value;
 }
 
 function setMergeRequestId(value) {
-  document.getElementById("merge-request-id").value = value;
+  mergeRequestEdit.value = value;
+}
+
+function addMergeRequestChangeListener(listener) {
+  mergeRequestEdit.addEventListener('change', listener);
 }
 
 // TODO: don't export timerBtn.
-export {updateView, updateInputsView, getProjectId, getMergeRequestId, addOnTimerClickEventHandler, timerBtn}
+export {updateView, updateInputsView, getProjectId, getMergeRequestId, addOnTimerClickEventHandler, timerBtn, addMergeRequestChangeListener};

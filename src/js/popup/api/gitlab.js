@@ -34,3 +34,13 @@ export function logWorkTime(hostname, token, projectId, mergeRequestId, spentTim
   return makeRequest('POST', url, token);
 }
 
+export function requestUserId(hostname, token) {
+  const url = getApiRootUrl(hostname) + '/user';
+  return makeRequest('GET', url, token).then((response) => JSON.parse(response).id);
+}
+
+export function requestNotes(hostname, token, projectId, mergeRequestId) {
+  const url = getApiRootUrl(hostname) + getMergeRequestPath(projectId, mergeRequestId) + '/notes?sort=asc';
+  return makeRequest('GET', url, token).then((response) => JSON.parse(response));
+}
+
