@@ -4,7 +4,7 @@ import { updateTimerCounter } from './timerCounterView';
 import imgStart from '../../../img/start-gray-16.png';
 import imgStop from '../../../img/stop-red-16.png';
 
-const timerBtn = document.getElementById("timer");
+const timerBtn = document.getElementById("timerToggler");
 
 function updateView(data) {
   updateButtonView(isTimerActive(data));
@@ -21,19 +21,19 @@ function updateInputsView(projectId, mergeRequestId) {
 }
 
 function updateButtonView(started) {
-  const timerBtn = document.getElementById("timer");
+  const timerButtonIcon = document.getElementsByClassName("timer-toggler-icon")[0];
 
   if (started) {
-    timerBtn.classList.add("started");
+    timerButtonIcon.classList.replace("fa-play-circle", "fa-stop-circle");
     browser.browserAction.setIcon({path: imgStop});
   }
   else {
-    timerBtn.classList.remove("started");
+    timerButtonIcon.classList.replace("fa-stop-circle", "fa-play-circle");
     browser.browserAction.setIcon({path: imgStart});
   }
 }
 
-const projectEdit = document.getElementById("project-id");
+const projectEdit = document.getElementById("projectId");
 
 function getProjectId() {
   return projectEdit.value;
@@ -43,7 +43,7 @@ function setProjectId(value) {
   projectEdit.value = value;
 }
 
-const mergeRequestEdit = document.getElementById("merge-request-id");
+const mergeRequestEdit = document.getElementById("mergeRequestId");
 
 function getMergeRequestId() {
   return mergeRequestEdit.value;

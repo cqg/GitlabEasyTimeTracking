@@ -1,8 +1,11 @@
-import "../css/popup.css";
+import '../css/popup.css';
 import '../css/bootstrap.min.css';
 
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
+import { faPlayCircle, faStopCircle } from '@fortawesome/free-regular-svg-icons';
+import { library, dom } from '@fortawesome/fontawesome-svg-core';
+
 import { storeTimerData, retrievePageUrl } from './popup/api/browser';
 import { initializeTimerData, initializeSettingsData } from './popup/actions/settings';
 import { onTimerClick, isTimerActive, isTimerLoaded } from './popup/actions/timer';
@@ -48,6 +51,11 @@ function initializeInterface() {
   addMergeRequestChangeListener(() => store.dispatch(onNewMergeRequest(getProjectId(), getMergeRequestId())));
 }
 
+function loadFontAwsomeIcons() {
+  library.add(faPlayCircle, faStopCircle);
+  dom.watch();
+}
+
 store.subscribe(() => {
   let state = store.getState();
   console.log('state', state);
@@ -59,6 +67,7 @@ store.subscribe(() => {
   updateView(state);
 });
 
+loadFontAwsomeIcons();
 initializeInterface();
 
 store.dispatch(initializeTimerData())
@@ -73,6 +82,4 @@ store.dispatch(initializeSettingsData())
   .then(() => Promise.all([
     store.dispatch(initializeUserId()),
     store.dispatch(onNewMergeRequest(getProjectId(), getMergeRequestId()))
-  ]))
-
-
+  ]));

@@ -6,20 +6,29 @@
 </head>
 
 <body>
-  <div class="card text-secondary bg-light">
-    <div class="card-header bg-dark border-0 py-1 d-flex align-items-center">
+  <div class="card">
+    <div class="card-header bg-dark text-white py-1 d-flex align-items-center">
       <span>CQG</span>
       <div class="ml-auto" id="timer-counter">00:00:00</div>
     </div>
-    <div class="card-body p-2">
-      <div class="wrapper">
-        <input type="text" class="text-edit" id="project-id" aria-describedby="projectIdHelp"
-          placeholder="Enter project Id">
-
-        <input type="number" class="min-text-edit" id="merge-request-id" aria-describedby="mergeRequestIdHelp"
-          placeholder="Enter merge request Id" />
-
-        <input type="button" id="timer" class="timer-button" value="" />
+    <div class="card-body p-2" style="width: 20rem;">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <input type="text" class="form-control" id="projectId" aria-describedby="projectIdHelp" placeholder="Project">
+            <small id="projectIdHelp" class="form-text text-muted">Project name.</small>
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" id="mergeRequestId" aria-describedby="mergeRequestIdHelp"
+              placeholder="Merge request">
+            <small id="mergeRequestIdHelp" class="form-text text-muted">Merge request Id.</small>
+          </div>
+          <div class="col-auto">
+            <button id="timerToggler" class="btn align-top border-0 mt-1">
+              <i class="timer-toggler-icon far fa-play-circle fa-2x"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 </body>
