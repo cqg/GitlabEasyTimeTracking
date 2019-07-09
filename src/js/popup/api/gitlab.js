@@ -26,9 +26,9 @@ function getNextRequest(method, token, linkHeader) {
 
   const nextLink = linkHeader.split(', ')
     .map((linkText) => linkText.split('; '))
-    .filter((linkPair) => linkPair[1] == 'rel=\"next\"')
-  if (nextLink.length != 1) return null;
-  const nextUrl = nextLink[0][0].slice(1, -1);
+    .find((linkPair) => linkPair[1] == 'rel=\"next\"');
+  if (!nextLink) return null;
+  const nextUrl = nextLink[0].slice(1, -1);
 
   return makeRequest(method, nextUrl, token);
 }
@@ -42,12 +42,12 @@ function getMergeRequestPath(projectId, mergeRequestId) {
 }
 
 export function logWorkTime(hostname, token, projectId, mergeRequestId, spentTime) {
-  const url = getApiRootUrl(hostname) + getMergeRequestPath(projectId, mergeRequestId) + `/add_spent_time?duration=${spentTime}s`;
+  const url = `${getApiRootUrl(hostname)}${getMergeRequestPath(projectId, mergeRequestId)}/add_spent_time?duration=${spentTime}s`;
   return makeRequest('POST', url, token).then((request) => request.response);
 }
 
 export function requestUserId(hostname, token) {
-  const url = getApiRootUrl(hostname) + '/user';
+  const url = `${getApiRootUrl(hostname)}/user`;
   return makeRequest('GET', url, token).then((request) => JSON.parse(request.response).id);
 }
 
@@ -62,7 +62,7 @@ export function requestNotes(hostname, token, projectId, mergeRequestId) {
     };
   };
 
-  const url = getApiRootUrl(hostname) + getMergeRequestPath(projectId, mergeRequestId) + '/notes?sort=asc&per_page=100';
+  const url = `${getApiRootUrl(hostname)}${getMergeRequestPath(projectId, mergeRequestId)}/notes?sort=asc&per_page=100`;
   return makeRequest('GET', url, token).then(onNotesLoad);
 }
 
