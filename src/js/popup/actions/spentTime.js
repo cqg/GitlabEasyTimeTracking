@@ -11,9 +11,17 @@ export function onNewMergeRequest(selectedProjectId, selectedMergeRequestId) {
     };
 
     dispatch({ type: ON_NOTES_PENDING, data: requestSettings });
+
+    const onNotesLoad = (result) => {
+      dispatch({ type: ON_NOTES_LOAD, data: { notes: result.notes, isFinal: !result.nextRequest, requestSettings } })
+      if (result.nextRequest) {
+        return result.nextRequest.then(onNotesLoad);
+      }
+      return Promise.resolve();
+    };
+
     const state = getState();
-    return requestNotes(state.settings.hostname, state.settings.token, selectedProjectId, selectedMergeRequestId)
-      .then((notes) => dispatch({ type: ON_NOTES_LOAD, data: { notes, requestSettings } }));
+    return requestNotes(state.settings.hostname, state.settings.token, selectedProjectId, selectedMergeRequestId).then(onNotesLoad);
   }
 }
 

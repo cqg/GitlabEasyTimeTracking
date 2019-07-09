@@ -3,6 +3,9 @@ function sum(x, y) {
 }
 
 function parseTimeElement(element) {
+  if (element.endsWith('mo'))return parseInt(element) * 60 * 60 * 8 * 5 * 4;
+  if (element.endsWith('w')) return parseInt(element) * 60 * 60 * 8 * 5;
+  if (element.endsWith('d')) return parseInt(element) * 60 * 60 * 8;
   if (element.endsWith('h')) return parseInt(element) * 60 * 60;
   if (element.endsWith('m')) return parseInt(element) * 60;
   if (element.endsWith('s')) return parseInt(element);

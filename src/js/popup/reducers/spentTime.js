@@ -9,9 +9,19 @@ const initialState = {
 function addSpentTimeIfPossible(state) {
   if (!state.notes || state.userId == -1) return state;
 
+  const time = calculateSpentTime(state.notes, state.userId) + state.time;
+
+  if (state.isComplete) {
+    return {
+      userId: state.userId,
+      time
+    };
+  }
   return {
     userId: state.userId,
-    time: calculateSpentTime(state.notes, state.userId)
+    notes: [],
+    time,
+    pendingRequest: state.pendingRequest,
   };
 }
 
@@ -21,11 +31,15 @@ export function spentTime(state = initialState, action) {
       return addSpentTimeIfPossible({ ...state, userId: action.data });
     case ON_NOTES_LOAD:
       if (action.data.requestSettings == state.pendingRequest) {
-        return addSpentTimeIfPossible({ ...state, notes: action.data.notes });
+        return addSpentTimeIfPossible({
+          ...state,
+          notes: [ ...state.notes, ...action.data.notes ],
+          isComplete: action.data.isFinal,
+        });
       }
       return state;
     case ON_NOTES_PENDING:
-      return { ...state, time: 0, pendingRequest: action.data };
+      return { ...state, notes: [], time: 0, pendingRequest: action.data };
     case STOP_TIMER:
       return {...state, time: state.time + action.data.spentTime };
   }
