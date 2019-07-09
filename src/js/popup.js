@@ -4,7 +4,7 @@ import '../css/bootstrap.min.css';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 import { faPlayCircle, faStopCircle } from '@fortawesome/free-regular-svg-icons';
-import { library, dom } from '@fortawesome/fontawesome-svg-core';
+import { library as svgCoreLib, dom as svgCoreDom } from '@fortawesome/fontawesome-svg-core';
 
 import { storeTimerData, retrievePageUrl } from './popup/api/browser';
 import { initializeTimerData, initializeSettingsData } from './popup/actions/settings';
@@ -52,8 +52,8 @@ function initializeInterface() {
 }
 
 function loadFontAwsomeIcons() {
-  library.add(faPlayCircle, faStopCircle);
-  dom.watch();
+  svgCoreLib.add(faPlayCircle, faStopCircle);
+  svgCoreDom.watch();
 }
 
 store.subscribe(() => {
