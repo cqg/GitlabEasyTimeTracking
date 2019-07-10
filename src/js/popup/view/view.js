@@ -57,5 +57,11 @@ function addMergeRequestChangeListener(listener) {
   mergeRequestEdit.addEventListener('change', listener);
 }
 
+const cancelBtn = document.getElementById("cancelButton");
+
+function addCancelButtonClickListener(listener) {
+  cancelButton.addEventListener('click', listener, false);
+}
+
 // TODO: don't export timerBtn.
-export {updateView, updateInputsView, getProjectId, getMergeRequestId, addOnTimerClickEventHandler, timerBtn, addMergeRequestChangeListener};
+export {updateView, updateInputsView, getProjectId, getMergeRequestId, addOnTimerClickEventHandler, timerBtn, addMergeRequestChangeListener, addCancelButtonClickListener};
