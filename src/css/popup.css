@@ -1,3 +1,7 @@
+.card-body {
+  width: 20rem;
+}
+
 #timerToggler {
   padding: 0;
   border-radius: 50%;
@@ -5,4 +9,9 @@
 
 .fa-stop-circle {
   color: red;
+}
+
+.logo {
+  content: url('../img/cqglogo.svg');
+  height: 1rem;
 }
