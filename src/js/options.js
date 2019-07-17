@@ -1,4 +1,5 @@
 import "../css/options.css";
+import '../css/bootstrap.min.css';
 
 import '../img/start-black-16.png';
 import '../img/start-black-48.png';
