@@ -2,11 +2,15 @@ import Timer from 'easytimer.js';
 import { calculateSpentSeconds } from '../actions/timer';
 
 const timer = new Timer();
-const timerCounterElement = document.getElementById("timer-counter");
+const timerCounterElement = document.getElementById("timerCounter");
+const timerCounterHelpElement = document.getElementById("timerCounterHelp");
+const timerTotalElement = document.getElementById("timerTotal");
 
 export function updateTimerCounter(state) {
-  const secondsPassed = calculateSpentSeconds(state.timer.startTime) + state.spentTime.time;
+  const secondsPassed = calculateSpentSeconds(state.timer.startTime);
+  timerTotalElement.innerText = secondsToFormattedTime(secondsPassed + state.spentTime.time);
   timerCounterElement.innerText = secondsToFormattedTime(secondsPassed);
+  timerCounterHelp.innerText = state.timer.startTime > 0 ? 'recording' : '';
 }
 
 function secondsToFormattedTime(seconds) {

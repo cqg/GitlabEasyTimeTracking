@@ -53,6 +53,7 @@ export function onTimerClick(store, selectedProjectId, selectedMergeRequestId) {
 
 export function cancelTimer() {
    return (dispatch) => {
+      stopTimerCounter();
       dispatch({ type: types.CANCEL_TIMER });
    };
 }
