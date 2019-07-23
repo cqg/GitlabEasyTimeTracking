@@ -13,7 +13,7 @@ export function onNewMergeRequest(selectedProjectId, selectedMergeRequestId) {
     dispatch({ type: ON_NOTES_PENDING, data: requestSettings });
 
     const onNotesLoad = (result) => {
-      dispatch({ type: ON_NOTES_LOAD, data: { notes: result.notes, isFinal: !result.nextRequest, requestSettings } })
+      dispatch({ type: ON_NOTES_LOAD, data: { notes: result.notes, isFinal: !result.nextRequest, requestSettings } });
       if (result.nextRequest) {
         return result.nextRequest.then(onNotesLoad);
       }

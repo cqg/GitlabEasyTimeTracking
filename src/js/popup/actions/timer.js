@@ -24,7 +24,7 @@ function stopTimer(timer, settings) {
     .then((response) => console.log('response', response))
     .catch((error) => {
       console.log(error);
-      alert(`Error: ${error.status}, ${error.statusText}\nPlease enter spent time manually via command: /spend ${spentTime}s`)
+      alert(`Error: ${error.status}, ${error.statusText}\nPlease enter spent time manually via command: /spend ${spentTime}s`);
     });
 
   return { type: types.STOP_TIMER, data: { spentTime } };
@@ -49,6 +49,12 @@ export function onTimerClick(store, selectedProjectId, selectedMergeRequestId) {
     store.dispatch(stopTimer(data.timer, data.settings));
     stopTimerCounter();
   }
+}
+
+export function cancelTimer() {
+   return (dispatch) => {
+      dispatch({ type: types.CANCEL_TIMER });
+   };
 }
 
 export function calculateSpentSeconds(start) {

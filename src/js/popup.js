@@ -3,14 +3,14 @@ import '../css/bootstrap.min.css';
 
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
-import { faPlayCircle, faStopCircle } from '@fortawesome/free-regular-svg-icons';
+import { faPlayCircle, faStopCircle, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import { library as svgCoreLib, dom as svgCoreDom } from '@fortawesome/fontawesome-svg-core';
 
 import { storeTimerData, retrievePageUrl } from './popup/api/browser';
 import { initializeTimerData, initializeSettingsData } from './popup/actions/settings';
-import { onTimerClick, isTimerActive, isTimerLoaded } from './popup/actions/timer';
+import { onTimerClick, isTimerActive, isTimerLoaded, cancelTimer } from './popup/actions/timer';
 import { onNewMergeRequest, initializeUserId } from './popup/actions/spentTime';
-import { updateView, updateInputsView, getProjectId, getMergeRequestId, timerBtn, addMergeRequestChangeListener } from './popup/view/view';
+import { updateView, updateInputsView, getProjectId, getMergeRequestId, timerBtn, addMergeRequestChangeListener, addCancelButtonClickListener } from './popup/view/view';
 import { startTimerCounter } from './popup/view/timerCounterView';
 import reducer from './popup/reducers';
 
@@ -49,10 +49,11 @@ function initializeInterface() {
   retrievePageUrl().then(initializeFromUrl, onError);
   timerBtn.addEventListener("click", () => onTimerClick(store, getProjectId(), getMergeRequestId()), false);
   addMergeRequestChangeListener(() => store.dispatch(onNewMergeRequest(getProjectId(), getMergeRequestId())));
+  addCancelButtonClickListener(() => store.dispatch(cancelTimer()));
 }
 
 function loadFontAwsomeIcons() {
-  svgCoreLib.add(faPlayCircle, faStopCircle);
+  svgCoreLib.add(faPlayCircle, faStopCircle, faTimesCircle);
   svgCoreDom.watch();
 }
 
