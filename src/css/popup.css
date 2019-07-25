@@ -20,20 +20,18 @@
   height: 1.25rem;
 }
 
-#timerCounter {
+.timer-counter {
   font-size: 14px;
   line-height: 1;
+}
+
+.timer-counter-total {
+  color: grey;
 }
 
 #timerCounterHelp {
   margin-top: 0px;
   color: red;
-}
-
-#timerTotal {
-  font-size: 14px;
-  line-height: 1;
-  color: grey;
 }
 
 #timerTotalHelp {
