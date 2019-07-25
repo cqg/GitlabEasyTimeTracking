@@ -1,4 +1,4 @@
-import { ON_USER_ID_LOAD, ON_NOTES_LOAD, ON_NOTES_PENDING, STOP_TIMER } from '../constants/ActionTypes';
+import { ON_USER_ID_LOAD, ON_NOTES_LOAD, ON_MR_CHANGED, STOP_TIMER } from '../constants/ActionTypes';
 import { calculateSpentTime } from '../services/gitlabParser';
 
 const initialState = {
@@ -38,11 +38,10 @@ export function spentTime(state = initialState, action) {
         });
       }
       return state;
-    case ON_NOTES_PENDING:
+    case ON_MR_CHANGED:
       return { ...state, notes: [], time: 0, pendingRequest: action.data };
     case STOP_TIMER:
       return {...state, time: state.time + action.data.spentTime };
   }
   return state;
 }
-

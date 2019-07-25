@@ -66,3 +66,7 @@ export function requestNotes(hostname, token, projectId, mergeRequestId) {
   return makeRequest('GET', url, token).then(onNotesLoad);
 }
 
+export function requestMergeRequestName(hostname, token, projectId, mergeRequestId) {
+  const url = getApiRootUrl(hostname) + getMergeRequestPath(projectId, mergeRequestId);
+  return makeRequest('GET', url, token).then((request) => JSON.parse(request.response).title);
+}
