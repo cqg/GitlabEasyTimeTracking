@@ -17,5 +17,24 @@
 }
 
 .logo {
-  height: 1rem;
+  height: 1.25rem;
+}
+
+.timer-counter {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.timer-counter-total {
+  color: grey;
+}
+
+#timerCounterHelp {
+  margin-top: 0px;
+  color: red;
+}
+
+#timerTotalHelp {
+  margin-top: 0px;
+  color: grey;
 }
