@@ -1,75 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-  </head>
 
-  <body>
-    <div class="card">
-      <div
-        class="card-header bg-dark text-white py-1 d-flex align-items-center">
-        <div class="container">
-          <div class="row">
-            <div class="col align-self-center">
-              <img class="logo" alt="CQG Inc. logo" src="./img/cqglogo.svg" />
-            </div>
-            <div class="col-auto">
-              <div class="ml-auto timer-counter" id="timerCounter">
-                00:00:00
-              </div>
-              <small id="timerCounterHelp" class="form-text"></small>
-            </div>
-            <div class="col-auto">
-              <div
-                class="ml-auto text-right timer-counter timer-counter-total"
-                id="timerTotal">
-                00:00:00
-              </div>
-              <small id="timerTotalHelp" class="form-text text-right">
-                total
-              </small>
-            </div>
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <div class="card">
+    <div
+    class="card-header bg-dark text-white py-1 d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col align-self-center">
+          <img class="logo" alt="CQG Inc. logo" src="./img/cqglogo.svg" />
+        </div>
+        <div class="col-auto">
+          <div class="ml-auto timer-counter" id="timerCounter">
+            00:00:00
           </div>
+          <small id="timerCounterHelp" class="form-text"></small>
+        </div>
+        <div class="col-auto">
+          <div
+            class="ml-auto text-right timer-counter timer-counter-total"
+            id="timerTotal">
+            00:00:00
+          </div>
+          <small id="timerTotalHelp" class="form-text text-right">
+            total
+          </small>
         </div>
       </div>
-      <div class="card-body p-2">
-        <div class="container">
-          <div class="row">
-            <div class="col">
-              <input
-                type="text"
-                class="form-control"
-                id="projectId"
-                aria-describedby="projectIdHelp"
-                placeholder="Project" />
-              <small id="projectIdHelp" class="form-text text-muted">
-                Project name
-              </small>
-            </div>
-            <div class="col">
-              <input
-                type="text"
-                class="form-control"
-                id="mergeRequestId"
-                aria-describedby="mergeRequestIdHelp"
-                placeholder="Merge request" />
-              <small id="mergeRequestIdHelp" class="form-text text-muted">
-                Merge request Id
-              </small>
-            </div>
-            <div class="col-auto">
-              <button id="timerToggler" class="btn align-top border-0 mt-1">
-                <i class="timer-toggler-icon far fa-play-circle fa-2x"></i>
-              </button>
-            </div>
-            <div class="col-auto">
-              <button id="cancelButton" class="btn align-top border-0 mt-1">
-                <i class="far fa-times-circle fa-2x"></i>
-              </button>
-            </div>
+    </div>
+  </div>
+    <div class="card-body p-2">
+      <div class="container">
+        <div class="row">
+            <div class="col" id="mergeRequestContainer">
+              <div id="mergeRequestDisplayContainer">
+                <button id="mergeRequestNameDisplay" class="btn btn-block btn-light" title="Click the button to change merge request">
+                </button>
+              </div>
+              <div class="input-group" id="mergeRequestChangeContainer" style="display: none">
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="mergeRequestIdChange"
+                    placeholder="Merge request id" />
+                  <div class="input-group-append" id="button-addon4">
+                      <button class="btn btn-outline-secondary" type="button" id="saveMergeRequestChange">OK</button>
+                      <button class="btn btn-outline-secondary" type="button" id="discardMergeRequestChange">Cancel</button>
+                    </div>
+               </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <button id="timerToggler" class="btn btn-block btn-primary">
+              Start tracking
+            </button>
+          </div>
+          <div class="col">
+            <button id="cancelTracking" class="btn btn-block btn-secondary">
+              Cancel
+            </button>
           </div>
         </div>
       </div>
     </div>
-  </body>
+</body>
+
 </html>

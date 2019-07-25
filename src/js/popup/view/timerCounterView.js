@@ -7,7 +7,6 @@ import { calculateSpentSeconds } from "../actions/timer";
 
 const timer = new Timer();
 const timerCounterElement = document.getElementById("timerCounter");
-const timerCounterHelpElement = document.getElementById("timerCounterHelp");
 const timerTotalElement = document.getElementById("timerTotal");
 
 export function updateTimerCounter(state) {
