@@ -19,6 +19,7 @@ if (fileSystem.existsSync(secretsPath)) {
 }
 
 var options = {
+  node: false,
   mode: "production",
   entry: {
     popup: path.join(__dirname, "src", "js", "popup.js"),
