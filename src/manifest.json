@@ -1,5 +1,6 @@
 {
-  "name": "Gitlab Easy Time Tracking",
+  "name": "Gitlab Easy Time Tracker",
+  "short_name": "Time Tracker",
   "description": "A browser plugin for tracking time for Gitlab merge-requests",
   "version": "0.2",
   "options_ui": {
