@@ -64,4 +64,4 @@ function addCancelButtonClickListener(listener) {
 }
 
 // TODO: don't export timerBtn.
-export {updateView, updateInputsView, getProjectId, getMergeRequestId, addOnTimerClickEventHandler, timerBtn, addMergeRequestChangeListener, addCancelButtonClickListener};
+export {updateView, updateInputsView, getProjectId, getMergeRequestId, timerBtn, addMergeRequestChangeListener, addCancelButtonClickListener};
