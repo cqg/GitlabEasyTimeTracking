@@ -12,8 +12,7 @@ function makeRequest(method, url, token) {
     request.onloadend = () => {
       if (request.status >= 200 && request.status < 300) {
         resolve(request);
-      }
-      else {
+      } else {
         reject({
           status: request.status,
           statusText: request.statusText
@@ -28,9 +27,10 @@ function makeRequest(method, url, token) {
 function getNextRequest(method, token, linkHeader) {
   if (!linkHeader) return null;
 
-  const nextLink = linkHeader.split(', ')
-    .map((linkText) => linkText.split('; '))
-    .find((linkPair) => linkPair[1] == 'rel=\"next\"');
+  const nextLink = linkHeader
+    .split(", ")
+    .map(linkText => linkText.split("; "))
+    .find(linkPair => linkPair[1] == 'rel="next"');
   if (!nextLink) return null;
   const nextUrl = nextLink[0].slice(1, -1);
 
@@ -42,35 +42,63 @@ function getApiRootUrl(hostname) {
 }
 
 function getMergeRequestPath(projectId, mergeRequestId) {
-  return `/projects/${encodeURIComponent(projectId)}/merge_requests/${mergeRequestId}`;
+  return `/projects/${encodeURIComponent(
+    projectId
+  )}/merge_requests/${mergeRequestId}`;
 }
 
-export function logWorkTime(hostname, token, projectId, mergeRequestId, spentTime) {
-  const url = `${getApiRootUrl(hostname)}${getMergeRequestPath(projectId, mergeRequestId)}/add_spent_time?duration=${spentTime}s`;
-  return makeRequest('POST', url, token).then((request) => request.response);
+export function logWorkTime(
+  hostname,
+  token,
+  projectId,
+  mergeRequestId,
+  spentTime
+) {
+  const url = `${getApiRootUrl(hostname)}${getMergeRequestPath(
+    projectId,
+    mergeRequestId
+  )}/add_spent_time?duration=${spentTime}s`;
+  return makeRequest("POST", url, token).then(request => request.response);
 }
 
 export function requestUserId(hostname, token) {
   const url = `${getApiRootUrl(hostname)}/user`;
-  return makeRequest('GET', url, token).then((request) => JSON.parse(request.response).id);
+  return makeRequest("GET", url, token).then(
+    request => JSON.parse(request.response).id
+  );
 }
 
 export function requestNotes(hostname, token, projectId, mergeRequestId) {
-  const onNotesLoad = (request) => {
+  const onNotesLoad = request => {
     const notes = JSON.parse(request.response);
-    const nextRequest = getNextRequest('GET', token, request.getResponseHeader('link'));
+    const nextRequest = getNextRequest(
+      "GET",
+      token,
+      request.getResponseHeader("link")
+    );
     if (!nextRequest) return { notes };
     return {
       nextRequest: nextRequest.then(onNotesLoad),
-      notes,
+      notes
     };
   };
 
-  const url = `${getApiRootUrl(hostname)}${getMergeRequestPath(projectId, mergeRequestId)}/notes?sort=asc&per_page=100`;
-  return makeRequest('GET', url, token).then(onNotesLoad);
+  const url = `${getApiRootUrl(hostname)}${getMergeRequestPath(
+    projectId,
+    mergeRequestId
+  )}/notes?sort=asc&per_page=100`;
+  return makeRequest("GET", url, token).then(onNotesLoad);
 }
 
-export function requestMergeRequestName(hostname, token, projectId, mergeRequestId) {
-  const url = getApiRootUrl(hostname) + getMergeRequestPath(projectId, mergeRequestId);
-  return makeRequest('GET', url, token).then((request) => JSON.parse(request.response).title);
+export function requestMergeRequestName(
+  hostname,
+  token,
+  projectId,
+  mergeRequestId
+) {
+  const url =
+    getApiRootUrl(hostname) + getMergeRequestPath(projectId, mergeRequestId);
+  return makeRequest("GET", url, token).then(
+    request => JSON.parse(request.response).title
+  );
 }

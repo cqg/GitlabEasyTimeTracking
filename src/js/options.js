@@ -3,12 +3,12 @@
  */
 
 import "../css/options.css";
-import '../css/bootstrap.min.css';
+import "../css/bootstrap.min.css";
 
-import '../img/start-black-16.png';
-import '../img/start-black-48.png';
-import '../img/start-black-96.png';
-import '../img/start-black-128.png';
+import "../img/start-black-16.png";
+import "../img/start-black-48.png";
+import "../img/start-black-96.png";
+import "../img/start-black-128.png";
 
 function saveOptions(e) {
   e.preventDefault();
@@ -28,7 +28,9 @@ function restoreOptions() {
     console.log(error);
   }
 
-  browser.storage.sync.get(["token", "hostname"]).then(setCurrentChoice, onError);
+  browser.storage.sync
+    .get(["token", "hostname"])
+    .then(setCurrentChoice, onError);
 }
 
 document.addEventListener("DOMContentLoaded", restoreOptions);

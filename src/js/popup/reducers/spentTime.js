@@ -3,8 +3,13 @@
  *       from GitLab and parses already spent time
  */
 
-import { ON_USER_ID_LOAD, ON_NOTES_LOAD, ON_MR_CHANGED, STOP_TIMER } from '../constants/ActionTypes';
-import { calculateSpentTime } from '../services/gitlabParser';
+import {
+  ON_USER_ID_LOAD,
+  ON_NOTES_LOAD,
+  ON_MR_CHANGED,
+  STOP_TIMER
+} from "../constants/ActionTypes";
+import { calculateSpentTime } from "../services/gitlabParser";
 
 const initialState = {
   userId: -1,
@@ -26,7 +31,7 @@ function addSpentTimeIfPossible(state) {
     userId: state.userId,
     notes: [],
     time,
-    pendingRequest: state.pendingRequest,
+    pendingRequest: state.pendingRequest
   };
 }
 
@@ -38,15 +43,15 @@ export function spentTime(state = initialState, action) {
       if (action.data.requestSettings == state.pendingRequest) {
         return addSpentTimeIfPossible({
           ...state,
-          notes: [ ...state.notes, ...action.data.notes ],
-          isComplete: action.data.isFinal,
+          notes: [...state.notes, ...action.data.notes],
+          isComplete: action.data.isFinal
         });
       }
       return state;
     case ON_MR_CHANGED:
       return { ...state, notes: [], time: 0, pendingRequest: action.data };
     case STOP_TIMER:
-      return {...state, time: state.time + action.data.spentTime };
+      return { ...state, time: state.time + action.data.spentTime };
   }
   return state;
 }

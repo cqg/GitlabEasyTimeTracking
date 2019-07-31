@@ -2,7 +2,12 @@
  * @file Reducer to store timer state
  */
 
-import { START_TIMER, STOP_TIMER, CANCEL_TIMER, ON_TIMER_DATA_LOAD } from '../constants/ActionTypes';
+import {
+  START_TIMER,
+  STOP_TIMER,
+  CANCEL_TIMER,
+  ON_TIMER_DATA_LOAD
+} from "../constants/ActionTypes";
 
 const idleState = { startTime: 0 };
 
@@ -27,4 +32,3 @@ export function timer(state = null, action) {
       return state;
   }
 }
-

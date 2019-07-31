@@ -2,7 +2,7 @@
  * @file Reducer to store settings data
  */
 
-import { ON_SETTINGS_LOAD } from '../constants/ActionTypes';
+import { ON_SETTINGS_LOAD } from "../constants/ActionTypes";
 
 export function settings(state = null, action) {
   switch (action.type) {
@@ -12,4 +12,3 @@ export function settings(state = null, action) {
       return state;
   }
 }
-
