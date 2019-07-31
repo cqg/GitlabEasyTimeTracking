@@ -35,7 +35,7 @@ export function onNewMergeRequest(selectedProjectId, selectedMergeRequestId) {
         state.settings.hostname, state.settings.token,
         selectedProjectId, selectedMergeRequestId).then(onNameLoad),
     ]);
-  }
+  };
 }
 
 export function initializeUserId() {
