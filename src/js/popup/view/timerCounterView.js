@@ -1,3 +1,7 @@
+/**
+ * @file Contains UI of the timer, shows currently spent time to user
+ */
+
 import Timer from 'easytimer.js';
 import { calculateSpentSeconds } from '../actions/timer';
 

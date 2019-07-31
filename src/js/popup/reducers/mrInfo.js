@@ -1,4 +1,8 @@
-import { ON_MR_CHANGED, ON_MR_NAME_LOAD } from '../constants/ActionTypes'
+/**
+ * @file Reducer to store current MR data (ids and the name)
+ */
+
+import { ON_MR_CHANGED, ON_MR_NAME_LOAD } from '../constants/ActionTypes';
 
 const initialState = {
   projectId: '',

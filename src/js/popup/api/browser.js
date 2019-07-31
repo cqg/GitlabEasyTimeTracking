@@ -1,3 +1,7 @@
+/**
+ * @file Functions to communicate with browser API
+ */
+
 export function retrieveTimerData() {
   return browser.storage.local.get(null);
 }

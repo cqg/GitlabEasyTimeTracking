@@ -1,3 +1,7 @@
+/**
+ * @file Actions related to settings
+ */
+
 import { retrieveSettings, retrieveTimerData } from '../api/browser';
 import { ON_SETTINGS_LOAD, ON_TIMER_DATA_LOAD } from '../constants/ActionTypes';
 

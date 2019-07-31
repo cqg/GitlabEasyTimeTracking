@@ -1,3 +1,7 @@
+/**
+ * @file Main file for add-on options
+ */
+
 import "../css/options.css";
 import '../css/bootstrap.min.css';
 

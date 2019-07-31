@@ -1,3 +1,7 @@
+/**
+ * @file Contains functions to parse data from GitLab
+ */
+
 function sum(x, y) {
   return x + y;
 }
