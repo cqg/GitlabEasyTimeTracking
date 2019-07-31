@@ -1,9 +1,10 @@
 {
   "name": "gitlab-easy-time-tracking",
-  "version": "0.0.1",
+  "version": "0.2.1",
   "private": true,
-  "description": "A browser plugin for tracking time for Gitlab merge-requests",
+  "description": "A browser plugin for tracking time for GitLab merge-requests",
   "scripts": {
+    "build-prod": "NODE_ENV=production node utils/build.js",
     "build": "node utils/build.js",
     "start": "node utils/webserver.js",
     "format": "prettier --write 'src/css/*.css' 'src/**/*.js'",
