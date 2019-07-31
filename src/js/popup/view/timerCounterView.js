@@ -2,8 +2,8 @@
  * @file Contains UI of the timer, shows currently spent time to user
  */
 
-import Timer from 'easytimer.js';
-import { calculateSpentSeconds } from '../actions/timer';
+import Timer from "easytimer.js";
+import { calculateSpentSeconds } from "../actions/timer";
 
 const timer = new Timer();
 const timerCounterElement = document.getElementById("timerCounter");
@@ -12,9 +12,11 @@ const timerTotalElement = document.getElementById("timerTotal");
 
 export function updateTimerCounter(state) {
   const secondsPassed = calculateSpentSeconds(state.timer.startTime);
-  timerTotalElement.innerText = secondsToFormattedTime(secondsPassed + state.spentTime.time);
+  timerTotalElement.innerText = secondsToFormattedTime(
+    secondsPassed + state.spentTime.time
+  );
   timerCounterElement.innerText = secondsToFormattedTime(secondsPassed);
-  timerCounterHelp.innerText = state.timer.startTime > 0 ? 'recording' : '';
+  timerCounterHelp.innerText = state.timer.startTime > 0 ? "recording" : "";
 }
 
 function secondsToFormattedTime(seconds) {
@@ -25,7 +27,9 @@ function secondsToFormattedTime(seconds) {
 
 export function startTimerCounter(store) {
   timer.start();
-  timer.addEventListener('secondsUpdated', () => updateTimerCounter(store.getState()));
+  timer.addEventListener("secondsUpdated", () =>
+    updateTimerCounter(store.getState())
+  );
 }
 
 export function stopTimerCounter() {

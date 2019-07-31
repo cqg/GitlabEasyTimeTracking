@@ -2,11 +2,11 @@
  * @file Contains UI of popup
  */
 
-import { isTimerActive } from '../actions/timer';
-import { updateTimerCounter } from './timerCounterView';
+import { isTimerActive } from "../actions/timer";
+import { updateTimerCounter } from "./timerCounterView";
 
-import imgStart from '../../../img/start-gray-16.png';
-import imgStop from '../../../img/stop-red-16.png';
+import imgStart from "../../../img/start-gray-16.png";
+import imgStop from "../../../img/stop-red-16.png";
 
 const timerBtn = document.getElementById("timerToggler");
 
@@ -25,15 +25,16 @@ function updateInputsView(projectId, mergeRequestId) {
 }
 
 function updateButtonView(started) {
-  const timerButtonIcon = document.getElementsByClassName("timer-toggler-icon")[0];
+  const timerButtonIcon = document.getElementsByClassName(
+    "timer-toggler-icon"
+  )[0];
 
   if (started) {
     timerButtonIcon.classList.replace("fa-play-circle", "fa-stop-circle");
-    browser.browserAction.setIcon({path: imgStop});
-  }
-  else {
+    browser.browserAction.setIcon({ path: imgStop });
+  } else {
     timerButtonIcon.classList.replace("fa-stop-circle", "fa-play-circle");
-    browser.browserAction.setIcon({path: imgStart});
+    browser.browserAction.setIcon({ path: imgStart });
   }
 }
 
@@ -58,14 +59,22 @@ function setMergeRequestId(value) {
 }
 
 function addMergeRequestChangeListener(listener) {
-  mergeRequestEdit.addEventListener('change', listener);
+  mergeRequestEdit.addEventListener("change", listener);
 }
 
 const cancelBtn = document.getElementById("cancelButton");
 
 function addCancelButtonClickListener(listener) {
-  cancelButton.addEventListener('click', listener, false);
+  cancelButton.addEventListener("click", listener, false);
 }
 
 // TODO: don't export timerBtn.
-export {updateView, updateInputsView, getProjectId, getMergeRequestId, timerBtn, addMergeRequestChangeListener, addCancelButtonClickListener};
+export {
+  updateView,
+  updateInputsView,
+  getProjectId,
+  getMergeRequestId,
+  timerBtn,
+  addMergeRequestChangeListener,
+  addCancelButtonClickListener
+};

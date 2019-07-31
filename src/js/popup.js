@@ -2,28 +2,51 @@
  * @file Main file for add-on popup
  */
 
-import '../css/popup.css';
-import '../css/bootstrap.min.css';
+import "../css/popup.css";
+import "../css/bootstrap.min.css";
 
-import { createStore, applyMiddleware } from 'redux';
-import reduxThunk from 'redux-thunk';
-import { faPlayCircle, faStopCircle, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
-import { library as svgCoreLib, dom as svgCoreDom } from '@fortawesome/fontawesome-svg-core';
+import { createStore, applyMiddleware } from "redux";
+import reduxThunk from "redux-thunk";
+import {
+  faPlayCircle,
+  faStopCircle,
+  faTimesCircle
+} from "@fortawesome/free-regular-svg-icons";
+import {
+  library as svgCoreLib,
+  dom as svgCoreDom
+} from "@fortawesome/fontawesome-svg-core";
 
-import { storeTimerData, retrievePageUrl } from './popup/api/browser';
-import { initializeTimerData, initializeSettingsData } from './popup/actions/settings';
-import { onTimerClick, isTimerActive, isTimerLoaded, cancelTimer } from './popup/actions/timer';
-import { onNewMergeRequest, initializeUserId } from './popup/actions/spentTime';
-import { updateView, updateInputsView, getProjectId, getMergeRequestId, timerBtn, addMergeRequestChangeListener, addCancelButtonClickListener } from './popup/view/view';
-import { startTimerCounter } from './popup/view/timerCounterView';
-import reducer from './popup/reducers';
+import { storeTimerData, retrievePageUrl } from "./popup/api/browser";
+import {
+  initializeTimerData,
+  initializeSettingsData
+} from "./popup/actions/settings";
+import {
+  onTimerClick,
+  isTimerActive,
+  isTimerLoaded,
+  cancelTimer
+} from "./popup/actions/timer";
+import { onNewMergeRequest, initializeUserId } from "./popup/actions/spentTime";
+import {
+  updateView,
+  updateInputsView,
+  getProjectId,
+  getMergeRequestId,
+  timerBtn,
+  addMergeRequestChangeListener,
+  addCancelButtonClickListener
+} from "./popup/view/view";
+import { startTimerCounter } from "./popup/view/timerCounterView";
+import reducer from "./popup/reducers";
 
 const store = createStore(reducer, applyMiddleware(reduxThunk));
 
 function getProjectFromPath(path) {
   let elems = path.split("/");
   if (elems.length > 2) {
-    return elems[1] + '/' + elems[2];
+    return elems[1] + "/" + elems[2];
   }
   return "";
 }
@@ -38,21 +61,26 @@ function getMergeRequestIdFromPath(path) {
 
 function initializeFromUrl(url) {
   let data = store.getState();
-  if (!isTimerLoaded(data) || !isTimerActive(data))
-  {
-    let path = (new URL(url)).pathname;
+  if (!isTimerLoaded(data) || !isTimerActive(data)) {
+    let path = new URL(url).pathname;
     updateInputsView(getProjectFromPath(path), getMergeRequestIdFromPath(path));
   }
 }
 
 function onError(err) {
-  console.log('Error:', err);
+  console.log("Error:", err);
 }
 
 function initializeInterface() {
   retrievePageUrl().then(initializeFromUrl, onError);
-  timerBtn.addEventListener("click", () => onTimerClick(store, getProjectId(), getMergeRequestId()), false);
-  addMergeRequestChangeListener(() => store.dispatch(onNewMergeRequest(getProjectId(), getMergeRequestId())));
+  timerBtn.addEventListener(
+    "click",
+    () => onTimerClick(store, getProjectId(), getMergeRequestId()),
+    false
+  );
+  addMergeRequestChangeListener(() =>
+    store.dispatch(onNewMergeRequest(getProjectId(), getMergeRequestId()))
+  );
   addCancelButtonClickListener(() => store.dispatch(cancelTimer()));
 }
 
@@ -63,10 +91,10 @@ function loadFontAwsomeIcons() {
 
 store.subscribe(() => {
   let state = store.getState();
-  console.log('state', state);
+  console.log("state", state);
 
-  if (!isTimerLoaded(state)){
-      return;
+  if (!isTimerLoaded(state)) {
+    return;
   }
   storeTimerData(state.timer);
   updateView(state);
@@ -75,16 +103,20 @@ store.subscribe(() => {
 loadFontAwsomeIcons();
 initializeInterface();
 
-store.dispatch(initializeTimerData())
-  .then(() => {
-    if (isTimerActive(store.getState())) {
-      startTimerCounter(store);
-      return store.dispatch(onNewMergeRequest(getProjectId(), getMergeRequestId()));
-    }
-  });
+store.dispatch(initializeTimerData()).then(() => {
+  if (isTimerActive(store.getState())) {
+    startTimerCounter(store);
+    return store.dispatch(
+      onNewMergeRequest(getProjectId(), getMergeRequestId())
+    );
+  }
+});
 
-store.dispatch(initializeSettingsData())
-  .then(() => Promise.all([
-    store.dispatch(initializeUserId()),
-    store.dispatch(onNewMergeRequest(getProjectId(), getMergeRequestId()))
-  ]));
+store
+  .dispatch(initializeSettingsData())
+  .then(() =>
+    Promise.all([
+      store.dispatch(initializeUserId()),
+      store.dispatch(onNewMergeRequest(getProjectId(), getMergeRequestId()))
+    ])
+  );

@@ -2,12 +2,12 @@
  * @file Actions to stop/start time tracking via timer
  */
 
-import { logWorkTime } from '../api/gitlab';
-import * as types from '../constants/ActionTypes';
-import { startTimerCounter, stopTimerCounter } from '../view/timerCounterView';
+import { logWorkTime } from "../api/gitlab";
+import * as types from "../constants/ActionTypes";
+import { startTimerCounter, stopTimerCounter } from "../view/timerCounterView";
 
 function startTimer(projectId, mergeRequestId) {
-  let startTime = (new Date()).getTime();
+  let startTime = new Date().getTime();
 
   return {
     type: types.START_TIMER,
@@ -24,11 +24,19 @@ function stopTimer(timer, settings) {
   let mergeRequestId = timer.mergeRequestId;
   let spentTime = calculateSpentSeconds(timer.startTime);
 
-  logWorkTime(settings.hostname, settings.token, projectId, mergeRequestId, spentTime)
-    .then((response) => console.log('response', response))
-    .catch((error) => {
+  logWorkTime(
+    settings.hostname,
+    settings.token,
+    projectId,
+    mergeRequestId,
+    spentTime
+  )
+    .then(response => console.log("response", response))
+    .catch(error => {
       console.log(error);
-      alert(`Error: ${error.status}, ${error.statusText}\nPlease enter spent time manually via command: /spend ${spentTime}s`);
+      alert(
+        `Error: ${error.status}, ${error.statusText}\nPlease enter spent time manually via command: /spend ${spentTime}s`
+      );
     });
 
   return { type: types.STOP_TIMER, data: { spentTime } };
@@ -56,10 +64,10 @@ export function onTimerClick(store, selectedProjectId, selectedMergeRequestId) {
 }
 
 export function cancelTimer() {
-   return (dispatch) => {
-      stopTimerCounter();
-      dispatch({ type: types.CANCEL_TIMER });
-   };
+  return dispatch => {
+    stopTimerCounter();
+    dispatch({ type: types.CANCEL_TIMER });
+  };
 }
 
 export function calculateSpentSeconds(start) {
@@ -69,4 +77,3 @@ export function calculateSpentSeconds(start) {
   let seconds = Math.round(diff / 1000);
   return seconds;
 }
-
