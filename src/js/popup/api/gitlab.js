@@ -1,3 +1,7 @@
+/**
+ * @file Functions to communicate with GitLab API
+ */
+
 function makeRequest(method, url, token) {
   return new Promise((resolve, reject) => {
     let request = new XMLHttpRequest();

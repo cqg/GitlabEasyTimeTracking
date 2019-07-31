@@ -1,3 +1,7 @@
+/**
+ * @file Main file for add-on popup
+ */
+
 import '../css/popup.css';
 import '../css/bootstrap.min.css';
 

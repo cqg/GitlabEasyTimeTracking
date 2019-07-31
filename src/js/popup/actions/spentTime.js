@@ -1,3 +1,7 @@
+/**
+ * @file Actions that are needed to get already spent time from gitlab
+ */
+
 import { ON_USER_ID_LOAD, ON_NOTES_LOAD, ON_MR_CHANGED, ON_MR_NAME_LOAD } from '../constants/ActionTypes';
 import { requestUserId, requestNotes, requestMergeRequestName } from '../api/gitlab';
 

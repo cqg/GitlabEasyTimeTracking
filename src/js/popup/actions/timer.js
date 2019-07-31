@@ -1,3 +1,7 @@
+/**
+ * @file Actions to stop/start time tracking via timer
+ */
+
 import { logWorkTime } from '../api/gitlab';
 import * as types from '../constants/ActionTypes';
 import { startTimerCounter, stopTimerCounter } from '../view/timerCounterView';

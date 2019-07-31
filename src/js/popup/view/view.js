@@ -1,3 +1,7 @@
+/**
+ * @file Contains UI of popup
+ */
+
 import { isTimerActive } from '../actions/timer';
 import { updateTimerCounter } from './timerCounterView';
 

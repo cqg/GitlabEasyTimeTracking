@@ -1,3 +1,8 @@
+/**
+ * @file Reducer to store already spent time, reacts to all the data
+ *       from GitLab and parses already spent time
+ */
+
 import { ON_USER_ID_LOAD, ON_NOTES_LOAD, ON_MR_CHANGED, STOP_TIMER } from '../constants/ActionTypes';
 import { calculateSpentTime } from '../services/gitlabParser';
 
