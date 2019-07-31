@@ -38,7 +38,7 @@ function getNextRequest(method, token, linkHeader) {
 }
 
 function getApiRootUrl(hostname) {
-  return `${hostname}/api/v4`;
+  return new URL("api/v4", hostname).href;
 }
 
 function getMergeRequestPath(projectId, mergeRequestId) {
@@ -86,7 +86,7 @@ export function requestNotes(hostname, token, projectId, mergeRequestId) {
   const url = `${getApiRootUrl(hostname)}${getMergeRequestPath(
     projectId,
     mergeRequestId
-  )}/notes?sort=asc&per_page=100`;
+  )}/notes?sort=asc&per_page=50`;
   return makeRequest("GET", url, token).then(onNotesLoad);
 }
 

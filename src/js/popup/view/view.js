@@ -32,9 +32,11 @@ function updateButtonView(started) {
   if (started) {
     timerButtonIcon.classList.replace("fa-play-circle", "fa-stop-circle");
     browser.browserAction.setIcon({ path: imgStop });
+    browser.browserAction.setTitle({ title: "Recording" });
   } else {
     timerButtonIcon.classList.replace("fa-stop-circle", "fa-play-circle");
     browser.browserAction.setIcon({ path: imgStart });
+    browser.browserAction.setTitle({ title: "Start tracking" });
   }
 }
 
