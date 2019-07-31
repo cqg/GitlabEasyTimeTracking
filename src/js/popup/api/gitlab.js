@@ -19,7 +19,7 @@ function makeRequest(method, url, token) {
           statusText: request.statusText
         });
       }
-    }
+    };
 
     request.send();
   });

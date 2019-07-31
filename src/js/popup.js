@@ -79,7 +79,7 @@ store.dispatch(initializeTimerData())
   .then(() => {
     if (isTimerActive(store.getState())) {
       startTimerCounter(store);
-      return store.dispatch(onNewMergeRequest(getProjectId(), getMergeRequestId()))
+      return store.dispatch(onNewMergeRequest(getProjectId(), getMergeRequestId()));
     }
   });
 
