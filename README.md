@@ -1,19 +1,29 @@
-# GitlabEasyTimeTracking
+# Gitlab Easy Time Tracker
 
-## How to set up the add-on for your gitlab server
+Time tracking browser add-on for merge requests in GitLab
 
-### Token generation
+[![Build Status](https://travis-ci.org/cqg/GitlabEasyTimeTracking.svg?branch=master)](https://travis-ci.org/cqg/GitlabEasyTimeTracking)
 
-1. Go to your account settings in gitlab and open "Access Tokens" page.
+## Installation
+
+[<img src="https://addons.cdn.mozilla.net/static/img/addons-buttons/AMO-button_1.png" align="left" alt="for Firefox">](https://addons.mozilla.org/ru/firefox/addon/gitlabeasytimetracking)
+[<img src="https://developer.chrome.com/webstore/images/ChromeWebStore_BadgeWBorder_v2_206x58.png" alt="for Chrome">](
+https://chrome.google.com/webstore/detail/gitlab-easy-time-tracker/gmadafiegfmbmbkjpmbkillmnbdloiln)
+
+###  How to set it up for your GitLab server
+
+#### Token generation
+
+1. Go to your account settings in GitLab and open "Access Tokens" page.
 1. Add a personal access token with "api" scope.
 
-### Setting up the add-on
+#### Add-on settings
 
-1. Open extension settings.
-1. In "GitLab host" enter your gitlab server hostname, for example: "https://gitlab.com"
-1. In "GitLab token" enter generated API token.
+1. Open extension options.
+1. Enter your GitLab server hostname to "GitLab host" , for example: "https://gitlab.com"
+1. Enter generated API token to "GitLab token".
 
-## How to track time for merge requests using this add-on
+## Usage
 
 1. Open merge request page.
 1. Click on add-on icon. Edit boxes in popup shall be filled with repository and merge request id.
