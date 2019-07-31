@@ -5,7 +5,9 @@
   "description": "A browser plugin for tracking time for Gitlab merge-requests",
   "scripts": {
     "build": "node utils/build.js",
-    "start": "node utils/webserver.js"
+    "start": "node utils/webserver.js",
+    "format": "prettier --write 'src/css/*.css' 'src/**/*.js' 'src/**/*.html'",
+    "test": "jshint src & prettier --check 'src/css/*.css' 'src/**/*.js' 'src/**/*.html'"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^1.0.0",

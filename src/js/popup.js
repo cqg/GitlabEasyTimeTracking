@@ -3,7 +3,7 @@
  */
 
 import "../css/popup.css";
-import "../css/bootstrap.min.css";
+import "../css/lib/bootstrap.min.css";
 
 import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
