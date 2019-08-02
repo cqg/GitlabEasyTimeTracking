@@ -4,3 +4,6 @@ secrets.*.js
 
 # Mac OS X auxiliary file.
 .DS_Store
+
+# Zipped dist for Marketplaces.
+build.zip
