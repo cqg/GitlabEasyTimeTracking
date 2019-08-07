@@ -32,13 +32,14 @@ class Popup {
     this._subscribeToEvents();
 
     Promise.all([
-      // Get timer data from browser local storage.
+      // Load timer state from browser storage and put it to the store.
       this._store.dispatch(initializeTimerData()),
-      // Get data from current url.
-      retrievePageUrl(),
-      this._store.dispatch(initializeSettingsData())
+      // Load plugin parameters from browser storage and put it to the store.
+      this._store.dispatch(initializeSettingsData()),
+      // Load paremeters from currect url.
+      retrievePageUrl()
     ])
-    .then( (values) => {
+    .then((values) => {
       this._store.dispatch(initializeUserId())
 
       let projectId;
@@ -52,7 +53,7 @@ class Popup {
         startTimerCounter(this._store);
       }
       else {
-        const url = values[1];
+        const url = values[2];
         const path = new URL(url).pathname;
         projectId = this._getProjectFromPath(path);
         mergeRequestId = this._getMergeRequestIdFromPath(path);
