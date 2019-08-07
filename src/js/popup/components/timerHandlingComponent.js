@@ -4,7 +4,6 @@
 import imgStart from "../../../img/start-gray-16.png";
 import imgStop from "../../../img/stop-red-16.png";
 
-
 export default class TimerHandlingComponent {
   constructor() {
     this._timerTogglerElement = document.querySelector("#timerToggler");

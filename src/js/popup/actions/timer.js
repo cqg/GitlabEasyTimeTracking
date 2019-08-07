@@ -4,7 +4,10 @@
 
 import { logWorkTime } from "../api/gitlab";
 import * as types from "../constants/ActionTypes";
-import { startTimerCounter, stopTimerCounter } from "../components/timerCounterView";
+import {
+  startTimerCounter,
+  stopTimerCounter
+} from "../components/timerCounterView";
 
 function startTimer(projectId, mergeRequestId) {
   let startTime = new Date().getTime();

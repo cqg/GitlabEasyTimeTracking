@@ -38,30 +38,29 @@ class Popup {
       this._store.dispatch(initializeSettingsData()),
       // Load paremeters from currect url.
       retrievePageUrl()
-    ])
-    .then((values) => {
-      this._store.dispatch(initializeUserId())
+    ]).then(
+      values => {
+        this._store.dispatch(initializeUserId());
 
-      let projectId;
-      let mergeRequestId;
-      const state = this._store.getState();
+        let projectId;
+        let mergeRequestId;
+        const state = this._store.getState();
 
-      if (isTimerActive(state)) {
-        projectId = state.timer.projectId;
-        mergeRequestId = state.timer.mergeRequestId;
-        //TODO: Pass state instead of store.
-        startTimerCounter(this._store);
-      }
-      else {
-        const url = values[2];
-        const path = new URL(url).pathname;
-        projectId = this._getProjectFromPath(path);
-        mergeRequestId = this._getMergeRequestIdFromPath(path);
-      }
-      return this._store.dispatch(
-        onNewMergeRequest(projectId, mergeRequestId)
-      );
-    },
+        if (isTimerActive(state)) {
+          projectId = state.timer.projectId;
+          mergeRequestId = state.timer.mergeRequestId;
+          //TODO: Pass state instead of store.
+          startTimerCounter(this._store);
+        } else {
+          const url = values[2];
+          const path = new URL(url).pathname;
+          projectId = this._getProjectFromPath(path);
+          mergeRequestId = this._getMergeRequestIdFromPath(path);
+        }
+        return this._store.dispatch(
+          onNewMergeRequest(projectId, mergeRequestId)
+        );
+      },
       err => {
         console.log("Error:", err);
       }

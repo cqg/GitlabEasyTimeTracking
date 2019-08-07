@@ -16,7 +16,8 @@ export function updateTimerCounter(state) {
     secondsPassed + state.spentTime.time
   );
   timerCounterElement.innerText = secondsToFormattedTime(secondsPassed);
-  timerCounterHelpElement.innerText = state.timer.startTime > 0 ? "recording" : "";
+  timerCounterHelpElement.innerText =
+    state.timer.startTime > 0 ? "recording" : "";
 }
 
 function secondsToFormattedTime(seconds) {
