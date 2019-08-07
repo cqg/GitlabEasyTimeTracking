@@ -6,7 +6,7 @@ import { ON_MR_CHANGED, ON_MR_NAME_LOAD } from "../constants/ActionTypes";
 
 const initialState = {
   projectId: "",
-  mrId: "",
+  mergeRequestId: "",
   name: ""
 };
 

@@ -48,12 +48,10 @@ export default class MergeRequestSelectComponent {
 
   _onSaveMergeRequestChange() {
     const input = document.querySelector("#mergeRequestIdChange");
-    const mrId = input.value;
+    const mergeRequestId = input.value;
 
     let event = new CustomEvent("onMergeRequestChanged", {
-      detail: {
-        mrId: mrId
-      },
+      detail: { mergeRequestId },
       bubbles: true
     });
     input.dispatchEvent(event);
@@ -72,7 +70,7 @@ export default class MergeRequestSelectComponent {
     );
     document.querySelector(
       "#mergeRequestIdChange"
-    ).value = this._store.getState().mrInfo.mrId;
+    ).value = this._store.getState().mrInfo.mergeRequestId;
   }
 
   _switchToDisplayMode() {
