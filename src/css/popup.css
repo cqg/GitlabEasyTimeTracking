@@ -2,20 +2,6 @@
   width: 25rem;
 }
 
-#timerToggler {
-  padding: 0;
-  border-radius: 50%;
-}
-
-#cancelButton {
-  padding: 0;
-  border-radius: 50%;
-}
-
-.fa-stop-circle {
-  color: red;
-}
-
 .logo {
   height: 1.25rem;
 }

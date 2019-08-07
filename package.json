@@ -7,8 +7,8 @@
     "build-prod": "cross-env NODE_ENV=production node utils/build.js",
     "build": "node utils/build.js",
     "start": "node utils/webserver.js",
-    "format": "prettier --write 'src/css/*.css' 'src/**/*.js'",
-    "test": "jshint src & prettier --check 'src/css/*.css' 'src/**/*.js'"
+    "format": "prettier --write \"src/css/*.css\" \"src/**/*.js\"",
+    "test": "jshint src & prettier --check \"src/css/*.css\" \"src/**/*.js\""
   },
   "devDependencies": {
     "clean-webpack-plugin": "^1.0.0",
@@ -29,8 +29,6 @@
     "write-file-webpack-plugin": "4.5.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.19",
-    "@fortawesome/free-regular-svg-icons": "^5.9.0",
     "easytimer.js": "^3.2.0",
     "imports-loader": "^0.8.0",
     "redux": "^4.0.1",
