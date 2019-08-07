@@ -4,7 +4,7 @@
 
 import { logWorkTime } from "../api/gitlab";
 import * as types from "../constants/ActionTypes";
-import { startTimerCounter, stopTimerCounter } from "../view/timerCounterView";
+import { startTimerCounter, stopTimerCounter } from "../components/timerCounterView";
 
 function startTimer(projectId, mergeRequestId) {
   let startTime = new Date().getTime();
@@ -50,6 +50,7 @@ export function isTimerActive(data) {
   return data.timer.startTime > 0;
 }
 
+// TODO: make it proper redux-thunk action.
 export function onTimerToggled(store) {
   const state = store.getState();
   if (!isTimerLoaded(state)) return;

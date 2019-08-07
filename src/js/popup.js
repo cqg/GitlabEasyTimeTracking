@@ -20,35 +20,54 @@ import {
   cancelTimer
 } from "./popup/actions/timer";
 import { onNewMergeRequest, initializeUserId } from "./popup/actions/spentTime";
-import MainComponent from "./popup/view/mainComponent";
-import { startTimerCounter } from "./popup/view/timerCounterView";
+import MainComponent from "./popup/components/mainComponent";
+import { startTimerCounter } from "./popup/components/timerCounterView";
 import reducer from "./popup/reducers";
 
-export default class Popup {
+class Popup {
   constructor() {
     this._store = createStore(reducer, applyMiddleware(reduxThunk));
     this._mainComponent = new MainComponent(this._store);
-    this._initializeStore();
+    this._subscribeToStore();
     this._subscribeToEvents();
-    retrievePageUrl().then(
-      url => this._initializeFromUrl(url),
+
+    Promise.all([
+      // Get timer data from browser local storage.
+      this._store.dispatch(initializeTimerData()),
+      // Get data from current url.
+      retrievePageUrl(),
+      this._store.dispatch(initializeSettingsData())
+    ])
+    .then( (values) => {
+      this._store.dispatch(initializeUserId())
+
+      let projectId;
+      let mergeRequestId;
+      const state = this._store.getState();
+
+      if (isTimerActive(state)) {
+        projectId = state.timer.projectId;
+        mergeRequestId = state.timer.mergeRequestId;
+        //TODO: Pass state instead of store.
+        startTimerCounter(this._store);
+      }
+      else {
+        const url = values[1];
+        const path = new URL(url).pathname;
+        projectId = this._getProjectFromPath(path);
+        mergeRequestId = this._getMergeRequestIdFromPath(path);
+      }
+      return this._store.dispatch(
+        onNewMergeRequest(projectId, mergeRequestId)
+      );
+    },
       err => {
         console.log("Error:", err);
       }
     );
   }
 
-  _initializeFromUrl(url) {
-    const data = this._store.getState();
-    if (!isTimerLoaded(data) || !isTimerActive(data)) {
-      const path = new URL(url).pathname;
-      const projectId = this.getProjectFromPath(path);
-      const mergeRequestId = this.getMergeRequestIdFromPath(path);
-      this._store.dispatch(onNewMergeRequest(projectId, mergeRequestId));
-    }
-  }
-
-  getProjectFromPath(path) {
+  _getProjectFromPath(path) {
     let elems = path.split("/");
     if (elems.length > 2) {
       return elems[1] + "/" + elems[2];
@@ -56,7 +75,7 @@ export default class Popup {
     return "";
   }
 
-  getMergeRequestIdFromPath(path) {
+  _getMergeRequestIdFromPath(path) {
     let elems = path.split("/");
     if (elems.length > 4 && elems[3] == "merge_requests") {
       return elems[4];
@@ -64,29 +83,7 @@ export default class Popup {
     return "";
   }
 
-  _initializeStore() {
-    this._store.dispatch(initializeTimerData()).then(() => {
-      const state = this._store.getState();
-      if (!isTimerActive(state)) {
-        return;
-      }
-      //TODO: Pass state instead of store.
-      startTimerCounter(this._store);
-      return this._store.dispatch(
-        onNewMergeRequest(state.mrInfo.projectId, state.mrInfo.mrId)
-      );
-    });
-
-    this._store.dispatch(initializeSettingsData()).then(() => {
-      const state = this._store.getState();
-      Promise.all([
-        this._store.dispatch(initializeUserId()),
-        this._store.dispatch(
-          onNewMergeRequest(state.mrInfo.projectId, state.mrInfo.mrId)
-        )
-      ]);
-    });
-
+  _subscribeToStore() {
     this._store.subscribe(() => {
       const state = this._store.getState();
       console.log("state", state);

@@ -6,8 +6,9 @@ import Timer from "easytimer.js";
 import { calculateSpentSeconds } from "../actions/timer";
 
 const timer = new Timer();
-const timerCounterElement = document.getElementById("timerCounter");
-const timerTotalElement = document.getElementById("timerTotal");
+const timerCounterElement = document.querySelector("#timerCounter");
+const timerTotalElement = document.querySelector("#timerTotal");
+const timerCounterHelpElement = document.querySelector("#timerCounterHelp");
 
 export function updateTimerCounter(state) {
   const secondsPassed = calculateSpentSeconds(state.timer.startTime);
@@ -15,7 +16,7 @@ export function updateTimerCounter(state) {
     secondsPassed + state.spentTime.time
   );
   timerCounterElement.innerText = secondsToFormattedTime(secondsPassed);
-  timerCounterHelp.innerText = state.timer.startTime > 0 ? "recording" : "";
+  timerCounterHelpElement.innerText = state.timer.startTime > 0 ? "recording" : "";
 }
 
 function secondsToFormattedTime(seconds) {
