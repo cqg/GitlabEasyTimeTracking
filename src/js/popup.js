@@ -30,8 +30,12 @@ export default class Popup {
     this._mainComponent = new MainComponent(this._store);
     this._initializeStore();
     this._subscribeToEvents();
-    retrievePageUrl()
-      .then((url) => this._initializeFromUrl(url), (err) => {console.log("Error:", err)});
+    retrievePageUrl().then(
+      url => this._initializeFromUrl(url),
+      err => {
+        console.log("Error:", err);
+      }
+    );
   }
 
   _initializeFromUrl(url) {
@@ -51,7 +55,7 @@ export default class Popup {
     }
     return "";
   }
-  
+
   getMergeRequestIdFromPath(path) {
     let elems = path.split("/");
     if (elems.length > 4 && elems[3] == "merge_requests") {
@@ -72,41 +76,43 @@ export default class Popup {
         onNewMergeRequest(state.mrInfo.projectId, state.mrInfo.mrId)
       );
     });
-    
-    this._store
-      .dispatch(initializeSettingsData())
-      .then(() => {
-        const state = this._store.getState();
-        Promise.all([
-          this._store.dispatch(initializeUserId()),
-          this._store.dispatch(onNewMergeRequest(state.mrInfo.projectId, state.mrInfo.mrId))
-        ]);
-      });
 
-      this._store.subscribe(() => {
-        const state = this._store.getState();
-        console.log("state", state);
-      
-        if (!isTimerLoaded(state)) {
-          return;
-        }
-        storeTimerData(state.timer);
-        this._mainComponent.updateView();
-      });
+    this._store.dispatch(initializeSettingsData()).then(() => {
+      const state = this._store.getState();
+      Promise.all([
+        this._store.dispatch(initializeUserId()),
+        this._store.dispatch(
+          onNewMergeRequest(state.mrInfo.projectId, state.mrInfo.mrId)
+        )
+      ]);
+    });
+
+    this._store.subscribe(() => {
+      const state = this._store.getState();
+      console.log("state", state);
+
+      if (!isTimerLoaded(state)) {
+        return;
+      }
+      storeTimerData(state.timer);
+      this._mainComponent.updateView();
+    });
   }
 
   _subscribeToEvents() {
     document.addEventListener("onTimerToggled", () => {
       onTimerToggled(this._store);
     });
-  
+
     document.addEventListener("onTimerCancelled", () => {
       this._store.dispatch(cancelTimer());
     });
-  
-    document.addEventListener("onMergeRequestChanged", (event) => {
+
+    document.addEventListener("onMergeRequestChanged", event => {
       const state = this._store.getState();
-      this._store.dispatch(onNewMergeRequest(state.mrInfo.projectId, event.detail.mrId));
+      this._store.dispatch(
+        onNewMergeRequest(state.mrInfo.projectId, event.detail.mrId)
+      );
     });
   }
 }

@@ -3,58 +3,83 @@
  */
 
 export default class MergeRequestSelectComponent {
+  constructor(store) {
+    this._store = store;
+    this._rootContainerElement = document.querySelector(
+      "#mergeRequestContainer"
+    );
+    this._displayContainerElement = document.querySelector(
+      "#mergeRequestDisplayContainer"
+    );
+    this._changeContainerElement = document.querySelector(
+      "#mergeRequestChangeContainer"
+    );
 
-    constructor(store){
-        this._store = store;
-        this._rootContainerElement = document.querySelector("#mergeRequestContainer");
-        this._displayContainerElement = document.querySelector("#mergeRequestDisplayContainer");
-        this._changeContainerElement = document.querySelector("#mergeRequestChangeContainer");
+    this._displayNameElement = document.querySelector(
+      "#mergeRequestNameDisplay"
+    );
+    this._displayNameElement.addEventListener("click", () =>
+      this._onSwitchingToEditMode()
+    );
+  }
 
-        this._displayNameElement = document.querySelector("#mergeRequestNameDisplay");
-        this._displayNameElement.addEventListener("click", () => this._onSwitchingToEditMode());
-    }
+  setMergeRequestName(mergeRequestName) {
+    this._displayNameElement.innerText = mergeRequestName;
+  }
 
-    setMergeRequestName(mergeRequestName) {
-        this._displayNameElement.innerText = mergeRequestName;
-    }
+  _onSwitchingToEditMode() {
+    this._switchToEditMode();
 
-    _onSwitchingToEditMode() {
-        this._switchToEditMode();
+    // Subscribe to submiting changes.
+    let saveMergeRequestChangeElement = document.querySelector(
+      "#saveMergeRequestChange"
+    );
+    saveMergeRequestChangeElement.addEventListener("click", () =>
+      this._onSaveMergeRequestChange()
+    );
 
-        // Subscribe to submiting changes.
-        let saveMergeRequestChangeElement = document.querySelector("#saveMergeRequestChange");
-        saveMergeRequestChangeElement.addEventListener("click", () => this._onSaveMergeRequestChange());
+    let discardMergeRequestChange = document.querySelector(
+      "#discardMergeRequestChange"
+    );
+    discardMergeRequestChange.addEventListener("click", () =>
+      this._onDiscardMergeRequestChange()
+    );
+  }
 
-        let discardMergeRequestChange = document.querySelector("#discardMergeRequestChange");
-        discardMergeRequestChange.addEventListener("click", () => this._onDiscardMergeRequestChange());
-    }
+  _onSaveMergeRequestChange() {
+    const input = document.querySelector("#mergeRequestIdChange");
+    const mrId = input.value;
 
-    _onSaveMergeRequestChange() {
-        const input = document.querySelector("#mergeRequestIdChange");
-        const mrId = input.value;
+    let event = new CustomEvent("onMergeRequestChanged", {
+      detail: {
+        mrId: mrId
+      },
+      bubbles: true
+    });
+    input.dispatchEvent(event);
+    this._switchToDisplayMode();
+  }
 
-        let event = new CustomEvent("onMergeRequestChanged", {
-            detail: {
-                mrId: mrId
-            },
-            bubbles: true
-        });
-        input.dispatchEvent(event);
-        this._switchToDisplayMode();
-    }
+  _onDiscardMergeRequestChange() {
+    this._switchToDisplayMode();
+  }
 
-    _onDiscardMergeRequestChange() {
-        this._switchToDisplayMode();
-    }
+  _switchToEditMode() {
+    this._changeContainerElement.style.display = "";
+    this._rootContainerElement.replaceChild(
+      this._changeContainerElement,
+      this._displayContainerElement
+    );
+    document.querySelector(
+      "#mergeRequestIdChange"
+    ).value = this._store.getState().mrInfo.mrId;
+  }
 
-    _switchToEditMode() {
-        this._changeContainerElement.style.display = "";
-        this._rootContainerElement.replaceChild(this._changeContainerElement, this._displayContainerElement);
-        document.querySelector("#mergeRequestIdChange").value = this._store.getState().mrInfo.mrId;
-    }
-
-    _switchToDisplayMode() {
-        this._rootContainerElement.replaceChild(this._displayContainerElement, this._changeContainerElement);
-        this._changeContainerElement.style.display = "none";
-    }
+  _switchToDisplayMode() {
+    this._rootContainerElement.replaceChild(
+      this._displayContainerElement,
+      this._changeContainerElement
+    );
+    this._changeContainerElement.style.display = "none";
+  }
 }

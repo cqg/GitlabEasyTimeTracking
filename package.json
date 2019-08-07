@@ -7,8 +7,8 @@
     "build-prod": "cross-env NODE_ENV=production node utils/build.js",
     "build": "node utils/build.js",
     "start": "node utils/webserver.js",
-    "format": "prettier --write 'src/css/*.css' 'src/**/*.js'",
-    "test": "jshint src & prettier --check 'src/css/*.css' 'src/**/*.js'"
+    "format": "prettier --write \"src/css/*.css\" \"src/**/*.js\"",
+    "test": "jshint src & prettier --check \"src/css/*.css\" \"src/**/*.js\""
   },
   "devDependencies": {
     "clean-webpack-plugin": "^1.0.0",

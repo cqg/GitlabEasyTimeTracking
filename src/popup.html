@@ -7,51 +7,45 @@
 
 <body>
   <div class="card">
-    <div
-    class="card-header bg-dark text-white py-1 d-flex align-items-center">
-    <div class="container">
-      <div class="row">
-        <div class="col align-self-center">
-          <img class="logo" alt="CQG Inc. logo" src="./img/cqglogo.svg" />
-        </div>
-        <div class="col-auto">
-          <div class="ml-auto timer-counter" id="timerCounter">
-            00:00:00
+    <div class="card-header bg-dark text-white py-1 d-flex align-items-center">
+      <div class="container">
+        <div class="row">
+          <div class="col align-self-center">
+            <img class="logo" alt="CQG Inc. logo" src="./img/cqglogo.svg" />
           </div>
-          <small id="timerCounterHelp" class="form-text"></small>
-        </div>
-        <div class="col-auto">
-          <div
-            class="ml-auto text-right timer-counter timer-counter-total"
-            id="timerTotal">
-            00:00:00
+          <div class="col-auto">
+            <div class="ml-auto timer-counter" id="timerCounter">
+              00:00:00
+            </div>
+            <small id="timerCounterHelp" class="form-text"></small>
           </div>
-          <small id="timerTotalHelp" class="form-text text-right">
-            total
-          </small>
+          <div class="col-auto">
+            <div class="ml-auto text-right timer-counter timer-counter-total" id="timerTotal">
+              00:00:00
+            </div>
+            <small id="timerTotalHelp" class="form-text text-right">
+              total
+            </small>
+          </div>
         </div>
       </div>
     </div>
-  </div>
     <div class="card-body p-2">
       <div class="container">
         <div class="row">
-            <div class="col" id="mergeRequestContainer">
-              <div id="mergeRequestDisplayContainer">
-                <button id="mergeRequestNameDisplay" class="btn btn-block btn-light" title="Click the button to change merge request">
-                </button>
+          <div class="col" id="mergeRequestContainer">
+            <div id="mergeRequestDisplayContainer">
+              <button id="mergeRequestNameDisplay" class="btn btn-block btn-light"
+                title="Click the button to change merge request">
+              </button>
+            </div>
+            <div class="input-group" id="mergeRequestChangeContainer" style="display: none">
+              <input type="number" class="form-control" id="mergeRequestIdChange" placeholder="Merge request id" />
+              <div class="input-group-append" id="button-addon4">
+                <button class="btn btn-outline-secondary" type="button" id="saveMergeRequestChange">OK</button>
+                <button class="btn btn-outline-secondary" type="button" id="discardMergeRequestChange">Cancel</button>
               </div>
-              <div class="input-group" id="mergeRequestChangeContainer" style="display: none">
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="mergeRequestIdChange"
-                    placeholder="Merge request id" />
-                  <div class="input-group-append" id="button-addon4">
-                      <button class="btn btn-outline-secondary" type="button" id="saveMergeRequestChange">OK</button>
-                      <button class="btn btn-outline-secondary" type="button" id="discardMergeRequestChange">Cancel</button>
-                    </div>
-               </div>
+            </div>
           </div>
         </div>
         <div class="row mt-2">
