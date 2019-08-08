@@ -28,7 +28,9 @@ function secondsToFormattedTime(seconds) {
 
 export function startTimerCounter(getState) {
   timer.start();
-  timer.addEventListener("secondsUpdated", () => updateTimerCounter(getState()));
+  timer.addEventListener("secondsUpdated", () =>
+    updateTimerCounter(getState())
+  );
 }
 
 export function stopTimerCounter() {
