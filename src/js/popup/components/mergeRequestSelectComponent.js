@@ -14,36 +14,28 @@ export default class MergeRequestSelectComponent {
     this._changeContainerElement = document.querySelector(
       "#mergeRequestChangeContainer"
     );
-
     this._displayNameElement = document.querySelector(
       "#mergeRequestNameDisplay"
     );
     this._displayNameElement.addEventListener("click", () =>
-      this._onSwitchingToEditMode()
+      this._switchToEditMode()
+    );
+    this.saveMergeRequestChangeElement = document.querySelector(
+      "#saveMergeRequestChange"
+    );
+    this.saveMergeRequestChangeElement.addEventListener("click", () =>
+      this._onSaveMergeRequestChange()
+    );
+    this.discardMergeRequestChange = document.querySelector(
+      "#discardMergeRequestChange"
+    );
+    this.discardMergeRequestChange.addEventListener("click", () =>
+      this._switchToDisplayMode()
     );
   }
 
   setMergeRequestName(mergeRequestName) {
     this._displayNameElement.innerText = mergeRequestName;
-  }
-
-  _onSwitchingToEditMode() {
-    this._switchToEditMode();
-
-    // Subscribe to submiting changes.
-    let saveMergeRequestChangeElement = document.querySelector(
-      "#saveMergeRequestChange"
-    );
-    saveMergeRequestChangeElement.addEventListener("click", () =>
-      this._onSaveMergeRequestChange()
-    );
-
-    let discardMergeRequestChange = document.querySelector(
-      "#discardMergeRequestChange"
-    );
-    discardMergeRequestChange.addEventListener("click", () =>
-      this._onDiscardMergeRequestChange()
-    );
   }
 
   _onSaveMergeRequestChange() {
@@ -57,10 +49,6 @@ export default class MergeRequestSelectComponent {
       bubbles: true
     });
     input.dispatchEvent(event);
-    this._switchToDisplayMode();
-  }
-
-  _onDiscardMergeRequestChange() {
     this._switchToDisplayMode();
   }
 
