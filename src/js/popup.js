@@ -62,7 +62,7 @@ class Popup {
     const [projectId, mergeRequestId] = (() => {
       const state = this._store.getState();
       if (isTimerActive(state)) {
-        startTimerCounter(state);
+        startTimerCounter(this._store.getState);
         return [state.timer.projectId, state.timer.mergeRequestId];
       } else {
         return this._getMrInfoFromPath(new URL(url).pathname);

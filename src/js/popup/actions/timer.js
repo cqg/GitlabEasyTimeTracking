@@ -60,7 +60,7 @@ export function toggleTimer() {
 
     if (!isTimerActive(state)) {
       dispatch(startTimer(state.mrInfo.projectId, state.mrInfo.mergeRequestId));
-      startTimerCounter(store);
+      startTimerCounter(getState);
     } else {
       dispatch(stopTimer(state.timer, state.settings));
       stopTimerCounter();
