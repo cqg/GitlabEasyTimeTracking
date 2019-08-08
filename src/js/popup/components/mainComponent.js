@@ -2,7 +2,7 @@
  * @file Defines MainComponent.
  */
 
-import { isTimerActive } from "../actions/timer";
+import { isTimerLoaded, isTimerActive } from "../actions/timer";
 import { updateTimerCounter } from "./timerCounterView";
 import TimerHandlingComponent from "./timerHandlingComponent";
 import MergeRequestSelectComponent from "./mergeRequestSelectComponent";
@@ -16,7 +16,10 @@ export default class MainComponent {
 
   updateView() {
     const state = this._store.getState();
-    this.timerHandlingComponent.updateView(isTimerActive(state));
+    this.timerHandlingComponent.updateView(
+      state.mrInfo.name != "",
+      isTimerLoaded(state) && isTimerActive(state)
+    );
     this.mergeRequestSelectComponent.setMergeRequestName(state.mrInfo.name);
     updateTimerCounter(state);
   }

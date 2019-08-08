@@ -17,7 +17,10 @@ export default class TimerHandlingComponent {
     );
   }
 
-  updateView(isStarted) {
+  updateView(isLoaded, isStarted) {
+    this._timerTogglerElement.disabled = !isLoaded && !isStarted;
+    this._cancelTrackingElement.disabled = !isStarted;
+
     if (isStarted) {
       this._timerTogglerElement.classList.replace("btn-primary", "btn-danger");
       this._timerTogglerElement.innerText = "Stop Tracking";
