@@ -34,7 +34,19 @@ class Popup {
     this._subscribeToStore();
     this._subscribeToEvents();
 
-    this._initializeData();
+    this._initializeData().catch(error => {
+      const state = this._store.getState();
+      if (
+        state.settings &&
+        (!state.settings.hostname || !state.settings.token)
+      ) {
+        console.log("Please fill GitLab hostname and token in add-on options");
+      } else if (error instanceof TypeError) {
+        console.log(`URL is invalid, check your GitLab server in options`);
+      } else if (error.status && error.status == 401) {
+        console.log(`Unathorized, check your GitLab token in options`);
+      }
+    });
   }
 
   async _initializeData() {
@@ -47,8 +59,6 @@ class Popup {
       retrievePageUrl()
     ]);
 
-    this._store.dispatch(initializeUserId());
-
     const [projectId, mergeRequestId] = (() => {
       const state = this._store.getState();
       if (isTimerActive(state)) {
@@ -59,9 +69,10 @@ class Popup {
       }
     })();
 
-    return await this._store.dispatch(
-      selectMergeRequest(projectId, mergeRequestId)
-    );
+    return await Promise.all([
+      this._store.dispatch(initializeUserId()),
+      this._store.dispatch(selectMergeRequest(projectId, mergeRequestId))
+    ]);
   }
 
   _getMrInfoFromPath(path) {
