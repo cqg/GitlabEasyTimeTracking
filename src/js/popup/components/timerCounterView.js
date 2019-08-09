@@ -26,9 +26,11 @@ function secondsToFormattedTime(seconds) {
   return date.toISOString().substr(11, 8);
 }
 
-export function startTimerCounter(state) {
+export function startTimerCounter(getState) {
   timer.start();
-  timer.addEventListener("secondsUpdated", () => updateTimerCounter(state));
+  timer.addEventListener("secondsUpdated", () =>
+    updateTimerCounter(getState())
+  );
 }
 
 export function stopTimerCounter() {

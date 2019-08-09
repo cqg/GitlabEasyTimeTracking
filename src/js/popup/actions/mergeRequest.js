@@ -54,14 +54,14 @@ function loadNotes(gitlabSettings, requestSettings) {
 
 export function selectMergeRequest(selectedProjectId, selectedMergeRequestId) {
   return (dispatch, getState) => {
-    if (!selectedProjectId || !selectedMergeRequestId) return Promise.resolve();
-
     const requestSettings = {
       projectId: selectedProjectId,
       mergeRequestId: selectedMergeRequestId
     };
 
     dispatch({ type: ON_MR_CHANGED, data: requestSettings });
+
+    if (!selectedProjectId || !selectedMergeRequestId) return Promise.resolve();
 
     const settings = getState().settings;
     return Promise.all([
