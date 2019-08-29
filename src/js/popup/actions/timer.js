@@ -51,13 +51,13 @@ export function isTimerActive(data) {
 
 export function toggleTimer() {
   return (dispatch, getState) => {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const state = getState();
       if (!isTimerLoaded(state)) return;
 
       const action = isTimerActive(state)
         ? stopTimer(state.timer, state.settings)
-        : startTimer(state.mrInfo.projectId, state.mrInfo.mergeRequestId)
+        : startTimer(state.mrInfo.projectId, state.mrInfo.mergeRequestId);
 
       dispatch(action);
       resolve();

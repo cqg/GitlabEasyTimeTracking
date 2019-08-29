@@ -97,17 +97,16 @@ class Popup {
 
   _subscribeToEvents() {
     document.addEventListener("onTimerToggled", () => {
-      this._store.dispatch(toggleTimer())
-        .then(() => {
-          const state = this._store.getState();
-          if (!isTimerLoaded(state)) return;
+      this._store.dispatch(toggleTimer()).then(() => {
+        const state = this._store.getState();
+        if (!isTimerLoaded(state)) return;
 
-          if (isTimerActive(state)) {
-            this._mainComponent.startTimerCounter();
-          } else {
-            this._mainComponent.stopTimerCounter();
-          }
-        });
+        if (isTimerActive(state)) {
+          this._mainComponent.startTimerCounter();
+        } else {
+          this._mainComponent.stopTimerCounter();
+        }
+      });
     });
 
     document.addEventListener("onTimerCancelled", () => {

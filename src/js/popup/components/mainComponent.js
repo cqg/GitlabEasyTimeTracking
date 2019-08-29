@@ -22,7 +22,10 @@ export default class MainComponent {
       isTimerLoaded(state) && isTimerActive(state)
     );
     this._mergeRequestSelectComponent.setMergeRequestName(state.mrInfo.name);
-    this._timerCounterComponent.updateTimerCounter(state.timer.startTime, state.spentTime.time);
+    this._timerCounterComponent.updateTimerCounter(
+      state.timer.startTime,
+      state.spentTime.time
+    );
   }
 
   startTimerCounter() {
