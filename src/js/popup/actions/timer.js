@@ -4,10 +4,6 @@
 
 import { logWorkTime } from "../api/gitlab";
 import * as types from "../constants/ActionTypes";
-import {
-  startTimerCounter,
-  stopTimerCounter
-} from "../components/timerCounterView";
 
 function startTimer(projectId, mergeRequestId) {
   let startTime = new Date().getTime();
@@ -55,16 +51,17 @@ export function isTimerActive(data) {
 
 export function toggleTimer() {
   return (dispatch, getState) => {
-    const state = getState();
-    if (!isTimerLoaded(state)) return;
+    return new Promise(resolve => {
+      const state = getState();
+      if (!isTimerLoaded(state)) return;
 
-    if (!isTimerActive(state)) {
-      dispatch(startTimer(state.mrInfo.projectId, state.mrInfo.mergeRequestId));
-      startTimerCounter(getState);
-    } else {
-      dispatch(stopTimer(state.timer, state.settings));
-      stopTimerCounter();
-    }
+      const action = isTimerActive(state)
+        ? stopTimer(state.timer, state.settings)
+        : startTimer(state.mrInfo.projectId, state.mrInfo.mergeRequestId);
+
+      dispatch(action);
+      resolve();
+    });
   };
 }
 

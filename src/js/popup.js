@@ -24,7 +24,6 @@ import {
   initializeUserId
 } from "./popup/actions/mergeRequest";
 import MainComponent from "./popup/components/mainComponent";
-import { startTimerCounter } from "./popup/components/timerCounterView";
 import reducer from "./popup/reducers";
 
 class Popup {
@@ -59,15 +58,15 @@ class Popup {
       retrievePageUrl()
     ]);
 
-    const [projectId, mergeRequestId] = (() => {
-      const state = this._store.getState();
-      if (isTimerActive(state)) {
-        startTimerCounter(this._store.getState);
-        return [state.timer.projectId, state.timer.mergeRequestId];
-      } else {
-        return this._getMrInfoFromPath(new URL(url).pathname);
-      }
-    })();
+    const state = this._store.getState();
+
+    // Start displaying spent time changes if timer is active.
+    if (isTimerActive(state)) {
+      this._mainComponent.startTimerCounter();
+    }
+    const [projectId, mergeRequestId] = isTimerActive(state)
+      ? [state.timer.projectId, state.timer.mergeRequestId]
+      : this._getMrInfoFromPath(new URL(url).pathname);
 
     return await Promise.all([
       this._store.dispatch(initializeUserId()),
@@ -77,10 +76,10 @@ class Popup {
 
   _getMrInfoFromPath(path) {
     let elems = path.split("/");
-    const project = elems.length > 2 ? elems[1] + "/" + elems[2] : "";
+    const projectId = elems.length > 2 ? elems[1] + "/" + elems[2] : "";
     const mergeRequestId =
       elems.length > 4 && elems[3] == "merge_requests" ? elems[4] : "";
-    return [project, mergeRequestId];
+    return [projectId, mergeRequestId];
   }
 
   _subscribeToStore() {
@@ -98,7 +97,16 @@ class Popup {
 
   _subscribeToEvents() {
     document.addEventListener("onTimerToggled", () => {
-      this._store.dispatch(toggleTimer());
+      this._store.dispatch(toggleTimer()).then(() => {
+        const state = this._store.getState();
+        if (!isTimerLoaded(state)) return;
+
+        if (isTimerActive(state)) {
+          this._mainComponent.startTimerCounter();
+        } else {
+          this._mainComponent.stopTimerCounter();
+        }
+      });
     });
 
     document.addEventListener("onTimerCancelled", () => {
