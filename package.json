@@ -8,7 +8,7 @@
     "build": "node utils/build.js",
     "start": "node utils/webserver.js",
     "format": "prettier --write \"src/css/*.css\" \"src/**/*.js\"",
-    "test": "jshint src & prettier --check \"src/css/*.css\" \"src/**/*.js\""
+    "test": "jshint src && prettier --check \"src/css/*.css\" \"src/**/*.js\""
   },
   "devDependencies": {
     "clean-webpack-plugin": "^1.0.0",
@@ -36,6 +36,7 @@
   },
   "jshintConfig": {
     "esversion": 9,
-    "-W138": true
+    "-W138": true,
+    "laxbreak": true
   }
 }
