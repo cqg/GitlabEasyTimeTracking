@@ -3,7 +3,7 @@
  */
 
 export default class ErrorComponent {
-  constructor(store) {
+  constructor() {
     this._errorText = document.querySelector("#errorText");
   }
 
