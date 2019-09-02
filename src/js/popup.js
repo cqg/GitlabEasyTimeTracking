@@ -23,6 +23,7 @@ import {
   selectMergeRequest,
   initializeUserId
 } from "./popup/actions/mergeRequest";
+import { ON_ERROR } from "./popup/constants/ActionTypes";
 import MainComponent from "./popup/components/mainComponent";
 import reducer from "./popup/reducers";
 
@@ -39,11 +40,20 @@ class Popup {
         state.settings &&
         (!state.settings.hostname || !state.settings.token)
       ) {
-        console.log("Please fill GitLab hostname and token in add-on options");
+        this._store.dispatch({
+          type: ON_ERROR,
+          data: "Please fill GitLab hostname and token in options"
+        });
       } else if (error instanceof TypeError) {
-        console.log(`URL is invalid, check your GitLab server in options`);
+        this._store.dispatch({
+          type: ON_ERROR,
+          data: "URL is invalid, check your GitLab server in options"
+        });
       } else if (error.status && error.status == 401) {
-        console.log(`Unathorized, check your GitLab token in options`);
+        this._store.dispatch({
+          type: ON_ERROR,
+          data: "Unauthorized, check your GitLab token in options"
+        });
       }
     });
   }

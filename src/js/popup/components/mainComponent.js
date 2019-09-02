@@ -6,6 +6,7 @@ import { isTimerLoaded, isTimerActive } from "../actions/timer";
 import TimerHandlingComponent from "./timerHandlingComponent";
 import MergeRequestSelectComponent from "./mergeRequestSelectComponent";
 import TimerCounterComponent from "./timerCounterComponent";
+import ErrorComponent from "./errorComponent";
 
 export default class MainComponent {
   constructor(store) {
@@ -13,6 +14,7 @@ export default class MainComponent {
     this._timerHandlingComponent = new TimerHandlingComponent();
     this._timerCounterComponent = new TimerCounterComponent(store);
     this._mergeRequestSelectComponent = new MergeRequestSelectComponent(store);
+    this._errorComponent = new ErrorComponent();
   }
 
   updateView() {
@@ -26,6 +28,7 @@ export default class MainComponent {
       state.timer.startTime,
       state.spentTime.time
     );
+    this._errorComponent.update(state.error);
   }
 
   startTimerCounter() {

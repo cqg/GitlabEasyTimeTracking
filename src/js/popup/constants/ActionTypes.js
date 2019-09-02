@@ -11,3 +11,4 @@ export const ON_USER_ID_LOAD = "ON_USER_ID_LOAD";
 export const ON_NOTES_LOAD = "ON_NOTES_LOAD";
 export const ON_MR_CHANGED = "ON_MR_CHANGED";
 export const ON_MR_NAME_LOAD = "ON_MR_NAME_LOAD";
+export const ON_ERROR = "ON_ERROR";
