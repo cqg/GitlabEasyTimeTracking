@@ -67,7 +67,6 @@ export function toggleTimer() {
 
 export function cancelTimer() {
   return dispatch => {
-    stopTimerCounter();
     dispatch({ type: types.CANCEL_TIMER });
   };
 }

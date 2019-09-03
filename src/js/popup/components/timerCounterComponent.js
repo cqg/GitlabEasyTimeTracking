@@ -28,7 +28,7 @@ export default class TimerConunterComponent {
 
   updateTimerCounter(currentStart, spentBefore) {
     const secondsPassed = calculateSpentSeconds(currentStart);
-    this._timerCounterElement.innerText = this._secondsToFormattedTime(
+    this._timerTotalElement.innerText = this._secondsToFormattedTime(
       secondsPassed + spentBefore
     );
     this._timerCounterElement.innerText = this._secondsToFormattedTime(
