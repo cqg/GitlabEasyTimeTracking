@@ -10,27 +10,25 @@ import "../img/start-black-48.png";
 import "../img/start-black-96.png";
 import "../img/start-black-128.png";
 
-
 class Options {
   constructor() {
     document.addEventListener("DOMContentLoaded", () => this._restoreOptions);
     const form = document.getElementsByClassName("options-container")[0];
-    form.addEventListener("submit", (e) => this._saveOptions(e));
+    form.addEventListener("submit", e => this._saveOptions(e));
     this._statusElement = document.querySelector("#status");
   }
 
   async _saveOptions(e) {
-      e.preventDefault();
-      try {
-        await browser.storage.sync.set({
-          token: document.querySelector("#token").value,
-          hostname: document.querySelector("#hostname").value
-        });
-        this._setStatusOk();
-      }
-      catch(error) {
-        this._setStatusError(error.toString());
-      }
+    e.preventDefault();
+    try {
+      await browser.storage.sync.set({
+        token: document.querySelector("#token").value,
+        hostname: document.querySelector("#hostname").value
+      });
+      this._setStatusOk();
+    } catch (error) {
+      this._setStatusError(error.toString());
+    }
   }
 
   async _restoreOptions() {
@@ -38,8 +36,7 @@ class Options {
       var result = await browser.storage.sync.get(["token", "hostname"]);
       document.querySelector("#token").value = result.token || "";
       document.querySelector("#hostname").value = result.hostname || "";
-    }
-    catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -56,12 +53,12 @@ class Options {
     this._statusElement.style.visibility = "visible";
     this._statusElement.textContent = message;
 
-    if(isSuccess){
+    if (isSuccess) {
       this._statusElement.classList.replace("alert-danger", "alert-success");
     } else {
       this._statusElement.classList.replace("alert-success", "alert-danger");
     }
-    setTimeout(() => this._statusElement.style.visibility = "collapse", 1000);
+    setTimeout(() => (this._statusElement.style.visibility = "collapse"), 1000);
   }
 }
 
