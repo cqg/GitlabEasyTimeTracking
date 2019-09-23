@@ -10,28 +10,59 @@ import "../img/start-black-48.png";
 import "../img/start-black-96.png";
 import "../img/start-black-128.png";
 
-function saveOptions(e) {
-  e.preventDefault();
-  browser.storage.sync.set({
-    token: document.querySelector("#token").value,
-    hostname: document.querySelector("#hostname").value
-  });
-}
 
-function restoreOptions() {
-  function setCurrentChoice(result) {
-    document.querySelector("#token").value = result.token || "";
-    document.querySelector("#hostname").value = result.hostname || "";
+class Options {
+  constructor() {
+    document.addEventListener("DOMContentLoaded", () => this._restoreOptions);
+    const form = document.getElementsByClassName("options-container")[0];
+    form.addEventListener("submit", (e) => this._saveOptions(e));
+    this._statusElement = document.querySelector("#status");
   }
 
-  function onError(error) {
-    console.log(error);
+  async _saveOptions(e) {
+      e.preventDefault();
+      try {
+        await browser.storage.sync.set({
+          token: document.querySelector("#token").value,
+          hostname: document.querySelector("#hostname").value
+        });
+        this._setStatusOk();
+      }
+      catch(error) {
+        this._setStatusError(error.toString());
+      }
   }
 
-  browser.storage.sync
-    .get(["token", "hostname"])
-    .then(setCurrentChoice, onError);
+  async _restoreOptions() {
+    try {
+      var result = await browser.storage.sync.get(["token", "hostname"]);
+      document.querySelector("#token").value = result.token || "";
+      document.querySelector("#hostname").value = result.hostname || "";
+    }
+    catch(error) {
+      console.log(error);
+    }
+  }
+
+  _setStatusOk() {
+    this._setStatus("Saved!", true);
+  }
+
+  _setStatusError(errorText) {
+    this._setStatus(errorText, false);
+  }
+
+  _setStatus(message, isSuccess) {
+    this._statusElement.style.visibility = "visible";
+    this._statusElement.textContent = message;
+
+    if(isSuccess){
+      this._statusElement.classList.replace("alert-danger", "alert-success");
+    } else {
+      this._statusElement.classList.replace("alert-success", "alert-danger");
+    }
+    setTimeout(() => this._statusElement.style.visibility = "collapse", 1000);
+  }
 }
 
-document.addEventListener("DOMContentLoaded", restoreOptions);
-document.querySelector("form").addEventListener("submit", saveOptions);
+new Options();
