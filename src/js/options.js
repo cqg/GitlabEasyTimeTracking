@@ -27,7 +27,7 @@ class Options {
       });
       this._setStatusOk();
     } catch (error) {
-      this._setStatusError(error.toString());
+      this._setStatusError(`Settings cannot be saved: ${error.toString()}`);
     }
   }
 
@@ -37,7 +37,7 @@ class Options {
       document.querySelector("#token").value = result.token || "";
       document.querySelector("#hostname").value = result.hostname || "";
     } catch (error) {
-      console.log(error);
+      this._setStatusError(`Settings cannot be retrieved: ${error.toString()}`);
     }
   }
 
