@@ -12,7 +12,7 @@ import "../img/start-black-128.png";
 
 class Options {
   constructor() {
-    document.addEventListener("DOMContentLoaded", () => this._restoreOptions);
+    document.addEventListener("DOMContentLoaded", _ => this._restoreOptions());
     const form = document.getElementsByClassName("options-container")[0];
     form.addEventListener("submit", e => this._saveOptions(e));
     this._statusElement = document.querySelector("#status");
