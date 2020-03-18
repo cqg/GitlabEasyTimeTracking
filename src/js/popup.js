@@ -88,7 +88,9 @@ class Popup {
     let elems = path.split("/");
     const projectId = elems.length > 2 ? elems[1] + "/" + elems[2] : "";
     const mergeRequestId =
-      elems.length > 4 && elems[3] == "merge_requests" ? elems[4] : "";
+      elems[elems.length - 2] == "merge_requests"
+        ? elems[elems.length - 1]
+        : "";
     return [projectId, mergeRequestId];
   }
 
