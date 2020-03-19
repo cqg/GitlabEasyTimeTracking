@@ -1,6 +1,6 @@
 {
   "name": "gitlab-easy-time-tracking",
-  "version": "0.6.1",
+  "version": "0.6.0",
   "private": true,
   "description": "A browser plugin for tracking time for GitLab merge-requests",
   "scripts": {
