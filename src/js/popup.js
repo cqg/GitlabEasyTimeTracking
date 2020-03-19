@@ -86,7 +86,9 @@ class Popup {
 
   _getMrInfoFromPath(path) {
     let elems = path.split("/");
-    const projectId = elems.length > 2 ? elems[1] + "/" + elems[2] : "";
+    if (elems.length <= 2) return ["", ""];
+
+    const projectId = elems[1] + "/" + elems[2];
     const mergeRequestId =
       elems[elems.length - 2] == "merge_requests"
         ? elems[elems.length - 1]
