@@ -89,10 +89,9 @@ class Popup {
     if (elems.length <= 2) return ["", ""];
 
     const projectId = elems[1] + "/" + elems[2];
+    const mrsIndex = elems.indexOf("merge_requests");
     const mergeRequestId =
-      elems[elems.length - 2] == "merge_requests"
-        ? elems[elems.length - 1]
-        : "";
+      mrsIndex > 2 && mrsIndex + 1 < elems.length ? elems[mrsIndex + 1] : "";
     return [projectId, mergeRequestId];
   }
 
